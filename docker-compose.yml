@@ -1,0 +1,51 @@
+# docker-compose.yml — Stackly one-click deploy
+#
+# Usage:
+#   docker compose up -d
+#   docker compose logs -f
+#   docker compose down
+
+services:
+  stackly:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: stackly:latest
+    container_name: stackly
+    restart: unless-stopped
+    ports:
+      - "8890:8890"
+    environment:
+      PORT: "8890"
+      # API auth — comma-separated list of valid keys. Empty = no auth.
+      # STACKLY_API_KEYS: "key1,key2,key3"
+      # Per-IP rate limit (requests per minute). 0 = disabled.
+      STACKLY_RATE_LIMIT: "60"
+      # Cache TTL (24h, 1h, 30m, etc.)
+      CACHE_TTL: "24h"
+      # Persist cache to /app/data/cache.json (volume-mounted)
+      CACHE_PATH: "/app/data/cache.json"
+      # Rotate User-Agent per scan (helps avoid bot detection)
+      UA_ROTATE: "true"
+    volumes:
+      # Persistent cache + fingerprints
+      - stackly-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8890/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    # Resource limits — chromedp uses ~150-300MB per scan
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: "1.5"
+        reservations:
+          memory: 512M
+          cpus: "0.5"
+
+volumes:
+  stackly-data:
+    driver: local

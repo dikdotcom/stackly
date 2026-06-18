@@ -1,0 +1,16 @@
+bin/
+.git/
+.github/
+*.md
+!README.md
+*.log
+*.tmp
+.vscode/
+.idea/
+data/cache.json
+data/scan_results/
+web/static/cache/
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store

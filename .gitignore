@@ -1,0 +1,29 @@
+# Build artifacts
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binary
+*.test
+*.out
+
+# Coverage
+coverage.out
+coverage.txt
+
+# Runtime data
+data/cache.json
+data/users.json
+data/scan_results/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Docker
+Dockerfile.local

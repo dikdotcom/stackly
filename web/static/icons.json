@@ -1,0 +1,427 @@
+{
+  "adobe-fonts": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "algolia": {
+    "dir": "algolia",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/algolia/algolia-original.svg"
+  },
+  "amplitude": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "angular": {
+    "dir": "angular",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg"
+  },
+  "apache": {
+    "dir": "apache",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apache/apache-original.svg"
+  },
+  "astro": {
+    "dir": "astro",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/astro/astro-original.svg"
+  },
+  "aws": {
+    "dir": "amazonwebservices",
+    "variant": "original-wordmark",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+  },
+  "bigcommerce": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "bootstrap": {
+    "dir": "bootstrap",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg"
+  },
+  "bunnycdn": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "caddy": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "cloudflare": {
+    "dir": "cloudflare",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg"
+  },
+  "cloudflare-pages": {
+    "dir": "cloudflare",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg"
+  },
+  "cloudflare-turnstile": {
+    "dir": "cloudflare",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg"
+  },
+  "crisp": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "datadog-rum": {
+    "dir": "datadog",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/datadog/datadog-original.svg"
+  },
+  "digitalocean": {
+    "dir": "digitalocean",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/digitalocean/digitalocean-original.svg"
+  },
+  "django": {
+    "dir": "django",
+    "variant": "plain",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg"
+  },
+  "drupal": {
+    "dir": "drupal",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/drupal/drupal-original.svg"
+  },
+  "elasticsearch": {
+    "dir": "elasticsearch",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg"
+  },
+  "elementor": {
+    "dir": "wordpress",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-original.svg"
+  },
+  "esbuild": {
+    "dir": "javascript",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
+  },
+  "express": {
+    "dir": "express",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg"
+  },
+  "facebook-pixel": {
+    "dir": "facebook",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/facebook/facebook-original.svg"
+  },
+  "fastapi": {
+    "dir": "fastapi",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg"
+  },
+  "fastly": {
+    "dir": "fastapi",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg"
+  },
+  "flask": {
+    "dir": "flask",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg"
+  },
+  "flyio": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "font-awesome": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "ghost": {
+    "dir": "ghost",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ghost/ghost-original.svg"
+  },
+  "google-analytics": {
+    "dir": "google",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg"
+  },
+  "google-cloud": {
+    "dir": "googlecloud",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg"
+  },
+  "google-fonts": {
+    "dir": "google",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg"
+  },
+  "google-tag-manager": {
+    "dir": "google",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg"
+  },
+  "graphql": {
+    "dir": "graphql",
+    "variant": "plain",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg"
+  },
+  "gunicorn": {
+    "dir": "python",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+  },
+  "heroku": {
+    "dir": "heroku",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/heroku/heroku-original.svg"
+  },
+  "hotjar": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "hubspot": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "intercom": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "joomla": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "jquery": {
+    "dir": "jquery",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jquery/jquery-original.svg"
+  },
+  "klaviyo": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "magento": {
+    "dir": "magento",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/magento/magento-original.svg"
+  },
+  "mailchimp": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "mixpanel": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "mysql": {
+    "dir": "mysql",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg"
+  },
+  "netlify": {
+    "dir": "netlify",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/netlify/netlify-original.svg"
+  },
+  "nextjs": {
+    "dir": "nextjs",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg"
+  },
+  "nginx": {
+    "dir": "nginx",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg"
+  },
+  "nodejs": {
+    "dir": "nodejs",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg"
+  },
+  "nuxt": {
+    "dir": "nuxt",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nuxt/nuxt-original.svg"
+  },
+  "openresty": {
+    "dir": "nginx",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg"
+  },
+  "parcel": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "paypal": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "php": {
+    "dir": "php",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg"
+  },
+  "postgresql": {
+    "dir": "postgresql",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg"
+  },
+  "python": {
+    "dir": "python",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+  },
+  "railway": {
+    "dir": "railway",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/railway/railway-original.svg"
+  },
+  "react": {
+    "dir": "react",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
+  },
+  "recaptcha": {
+    "dir": "google",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg"
+  },
+  "redis": {
+    "dir": "redis",
+    "variant": "plain",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-plain.svg"
+  },
+  "remix": {
+    "dir": "remix",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/remix/remix-original.svg"
+  },
+  "render": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "rollup": {
+    "dir": "rollup",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rollup/rollup-original.svg"
+  },
+  "segment": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "sentry": {
+    "dir": "sentry",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sentry/sentry-original.svg"
+  },
+  "shopify": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "squarespace": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "stripe": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "svelte": {
+    "dir": "svelte",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/svelte/svelte-original.svg"
+  },
+  "sveltekit": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "tailwindcss": {
+    "dir": "tailwindcss",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg"
+  },
+  "turbopack": {
+    "dir": "react",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
+  },
+  "typescript": {
+    "dir": "typescript",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg"
+  },
+  "uvicorn": {
+    "dir": "python",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+  },
+  "vercel": {
+    "dir": "vercel",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg"
+  },
+  "vite": {
+    "dir": "vite",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vite/vite-original.svg"
+  },
+  "vue": {
+    "dir": "vuejs",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg"
+  },
+  "webflow": {
+    "dir": "webflow",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/webflow/webflow-original.svg"
+  },
+  "webpack": {
+    "dir": "webpack",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/webpack/webpack-original.svg"
+  },
+  "wix": {
+    "dir": null,
+    "variant": null,
+    "url": null
+  },
+  "woocommerce": {
+    "dir": "woocommerce",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/woocommerce/woocommerce-original.svg"
+  },
+  "wordpress": {
+    "dir": "wordpress",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-original.svg"
+  },
+  "yoast": {
+    "dir": "wordpress",
+    "variant": "original",
+    "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-original.svg"
+  }
+}

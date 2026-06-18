@@ -1,0 +1,98 @@
+{
+  "adobe-fonts": [
+    "A",
+    "#FF9A00"
+  ],
+  "amplitude": [
+    "A",
+    "#1E61F0"
+  ],
+  "bigcommerce": [
+    "B",
+    "#34313F"
+  ],
+  "bunnycdn": [
+    "B",
+    "#F58220"
+  ],
+  "caddy": [
+    "C",
+    "#1F88C0"
+  ],
+  "crisp": [
+    "C",
+    "#1972F5"
+  ],
+  "flyio": [
+    "F",
+    "#A038FF"
+  ],
+  "font-awesome": [
+    "FA",
+    "#528DD7"
+  ],
+  "hotjar": [
+    "H",
+    "#FD3A5C"
+  ],
+  "hubspot": [
+    "H",
+    "#FF7A59"
+  ],
+  "intercom": [
+    "I",
+    "#1F8DED"
+  ],
+  "joomla": [
+    "J",
+    "#F44321"
+  ],
+  "klaviyo": [
+    "K",
+    "#000000"
+  ],
+  "mailchimp": [
+    "M",
+    "#FFE01B"
+  ],
+  "mixpanel": [
+    "M",
+    "#7856FF"
+  ],
+  "parcel": [
+    "P",
+    "#E63946"
+  ],
+  "paypal": [
+    "P",
+    "#003087"
+  ],
+  "render": [
+    "R",
+    "#46E3B7"
+  ],
+  "segment": [
+    "S",
+    "#52BD94"
+  ],
+  "shopify": [
+    "S",
+    "#95BF47"
+  ],
+  "squarespace": [
+    "Sq",
+    "#000000"
+  ],
+  "stripe": [
+    "S",
+    "#635BFF"
+  ],
+  "sveltekit": [
+    "SK",
+    "#FF3E00"
+  ],
+  "wix": [
+    "W",
+    "#0C6EFC"
+  ]
+}

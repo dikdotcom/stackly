@@ -1,0 +1,3572 @@
+{
+  "version": "1.2.0",
+  "updated": "2026-06-18",
+  "technologies": [
+    {
+      "slug": "wordpress",
+      "name": "WordPress",
+      "website": "https://wordpress.org",
+      "category": "cms",
+      "icon": "wordpress.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "/wp-content/"
+          },
+          {
+            "pattern": "/wp-includes/"
+          },
+          {
+            "pattern": "wp-json"
+          }
+        ],
+        "meta": [
+          {
+            "name": "generator",
+            "pattern": "WordPress"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "wp-includes/js/"
+          },
+          {
+            "pattern": "wp-content/themes/"
+          }
+        ],
+        "css": [
+          {
+            "pattern": "wp-content/themes/"
+          },
+          {
+            "pattern": "wp-content/plugins/"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "wordpress_logged_in"
+          },
+          {
+            "pattern": "wp-settings-"
+          }
+        ],
+        "url": [
+          {
+            "pattern": "/wp-admin"
+          },
+          {
+            "pattern": "/wp-login.php"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "wp"
+          }
+        ]
+      },
+      "implies": [
+        "PHP",
+        "MySQL"
+      ]
+    },
+    {
+      "slug": "ghost",
+      "name": "Ghost",
+      "website": "https://ghost.org",
+      "category": "cms",
+      "icon": "ghost.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "ghost-theme/"
+          },
+          {
+            "pattern": "ghost-url"
+          }
+        ],
+        "meta": [
+          {
+            "name": "generator",
+            "pattern": "Ghost"
+          }
+        ],
+        "headers": [
+          {
+            "header": "X-Ghost-Version",
+            "pattern": ""
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "ghost/assets/"
+          }
+        ]
+      },
+      "implies": [
+        "Node.js"
+      ]
+    },
+    {
+      "slug": "drupal",
+      "name": "Drupal",
+      "website": "https://drupal.org",
+      "category": "cms",
+      "icon": "drupal.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "Drupal.settings"
+          },
+          {
+            "pattern": "/sites/default/files/"
+          }
+        ],
+        "headers": [
+          {
+            "header": "X-Generator",
+            "pattern": "Drupal"
+          },
+          {
+            "header": "X-Drupal-Cache",
+            "pattern": ""
+          },
+          {
+            "header": "X-Drupal-Dynamic-Cache",
+            "pattern": ""
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "Drupal"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "SSESS"
+          },
+          {
+            "pattern": "Drupal."
+          }
+        ]
+      },
+      "implies": [
+        "PHP"
+      ]
+    },
+    {
+      "slug": "joomla",
+      "name": "Joomla",
+      "website": "https://joomla.org",
+      "category": "cms",
+      "icon": "joomla.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "/media/jui/"
+          },
+          {
+            "pattern": "Joomla!"
+          }
+        ],
+        "meta": [
+          {
+            "name": "generator",
+            "pattern": "Joomla!"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "joomla_"
+          }
+        ],
+        "url": [
+          {
+            "pattern": "/administrator/"
+          }
+        ]
+      },
+      "implies": [
+        "PHP",
+        "MySQL"
+      ]
+    },
+    {
+      "slug": "shopify",
+      "name": "Shopify",
+      "website": "https://shopify.com",
+      "category": "ecommerce",
+      "icon": "shopify.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "cdn.shopify.com"
+          },
+          {
+            "pattern": "Shopify.theme"
+          }
+        ],
+        "headers": [
+          {
+            "header": "X-ShopId",
+            "pattern": ""
+          },
+          {
+            "header": "X-RequestId",
+            "pattern": "shopify"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "Shopify"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "cdn.shopify.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "react",
+      "name": "React",
+      "website": "https://reactjs.org",
+      "category": "javascript",
+      "icon": "react.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "data-reactroot"
+          },
+          {
+            "pattern": "data-reactid"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "React"
+          },
+          {
+            "pattern": "__REACT_DEVTOOLS_GLOBAL_HOOK__"
+          },
+          {
+            "pattern": "_reactRootContainer"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "react.production.min.js"
+          },
+          {
+            "pattern": "react.development.js"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "vue",
+      "name": "Vue.js",
+      "website": "https://vuejs.org",
+      "category": "javascript",
+      "icon": "vue.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "data-v-"
+          },
+          {
+            "pattern": "v-cloak"
+          },
+          {
+            "pattern": "id=\"app\""
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "Vue"
+          },
+          {
+            "pattern": "__VUE__"
+          },
+          {
+            "pattern": "__vue__"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "vue.min.js"
+          },
+          {
+            "pattern": "vue.runtime"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "angular",
+      "name": "Angular",
+      "website": "https://angular.io",
+      "category": "javascript",
+      "icon": "angular.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "ng-version"
+          },
+          {
+            "pattern": "ng-app"
+          },
+          {
+            "pattern": "ng-controller"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "ng"
+          },
+          {
+            "pattern": "angular"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "angular.min.js"
+          },
+          {
+            "pattern": "polyfills.js"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "nextjs",
+      "name": "Next.js",
+      "website": "https://nextjs.org",
+      "category": "framework",
+      "icon": "nextjs.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "__NEXT_DATA__"
+          },
+          {
+            "pattern": "_next/static/"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "__NEXT_DATA__"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "_next/static/chunks/"
+          }
+        ]
+      },
+      "implies": [
+        "React",
+        "Node.js"
+      ]
+    },
+    {
+      "slug": "nuxt",
+      "name": "Nuxt.js",
+      "website": "https://nuxtjs.org",
+      "category": "framework",
+      "icon": "nuxt.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "__NUXT__"
+          },
+          {
+            "pattern": "_nuxt/"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "__NUXT__"
+          },
+          {
+            "pattern": "$nuxt"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "_nuxt/"
+          }
+        ]
+      },
+      "implies": [
+        "Vue.js",
+        "Node.js"
+      ]
+    },
+    {
+      "slug": "jquery",
+      "name": "jQuery",
+      "website": "https://jquery.com",
+      "category": "javascript",
+      "icon": "jquery.svg",
+      "detectors": {
+        "js_globals": [
+          {
+            "pattern": "jQuery"
+          },
+          {
+            "pattern": "$"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "jquery.min.js"
+          },
+          {
+            "pattern": "jquery-"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "bootstrap",
+      "name": "Bootstrap",
+      "website": "https://getbootstrap.com",
+      "category": "css",
+      "icon": "bootstrap.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "class=\"container"
+          },
+          {
+            "pattern": "class=\"row"
+          },
+          {
+            "pattern": "data-bs-"
+          }
+        ],
+        "css": [
+          {
+            "pattern": "bootstrap.min.css"
+          },
+          {
+            "pattern": "bootstrap.css"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "bootstrap.min.js"
+          },
+          {
+            "pattern": "bootstrap.bundle"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "tailwindcss",
+      "name": "Tailwind CSS",
+      "website": "https://tailwindcss.com",
+      "category": "css",
+      "icon": "tailwindcss.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "class=\"flex "
+          },
+          {
+            "pattern": "class=\"grid "
+          },
+          {
+            "pattern": "class=\"text-"
+          }
+        ],
+        "css": [
+          {
+            "pattern": "tailwindcss"
+          },
+          {
+            "pattern": "tailwind.min.css"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "tailwindcss.com/cdn"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "nginx",
+      "name": "Nginx",
+      "website": "https://nginx.org",
+      "category": "server",
+      "icon": "nginx.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "nginx"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "apache",
+      "name": "Apache",
+      "website": "https://httpd.apache.org",
+      "category": "server",
+      "icon": "apache.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "Apache"
+          },
+          {
+            "header": "X-Powered-By",
+            "pattern": "Apache"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "cloudflare",
+      "name": "Cloudflare",
+      "website": "https://cloudflare.com",
+      "category": "cdn",
+      "icon": "cloudflare.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "cloudflare"
+          },
+          {
+            "header": "CF-RAY",
+            "pattern": ""
+          },
+          {
+            "header": "cf-cache-status",
+            "pattern": ""
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "__cflb"
+          },
+          {
+            "pattern": "__cfuid"
+          },
+          {
+            "pattern": "cf_clearance"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "php",
+      "name": "PHP",
+      "website": "https://php.net",
+      "category": "programming",
+      "icon": "php.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "X-Powered-By",
+            "pattern": "PHP"
+          },
+          {
+            "header": "Set-Cookie",
+            "pattern": "PHPSESSID"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "PHPSESSID"
+          }
+        ],
+        "url": [
+          {
+            "pattern": ".php"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "nodejs",
+      "name": "Node.js",
+      "website": "https://nodejs.org",
+      "category": "programming",
+      "icon": "nodejs.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "X-Powered-By",
+            "pattern": "Express"
+          },
+          {
+            "header": "X-Powered-By",
+            "pattern": "Fastify"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "express",
+      "name": "Express",
+      "website": "https://expressjs.com",
+      "category": "framework",
+      "icon": "express.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "X-Powered-By",
+            "pattern": "Express"
+          }
+        ]
+      },
+      "implies": [
+        "Node.js"
+      ]
+    },
+    {
+      "slug": "django",
+      "name": "Django",
+      "website": "https://djangoproject.com",
+      "category": "framework",
+      "icon": "django.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "csrfmiddlewaretoken"
+          },
+          {
+            "pattern": "__admin_media_prefix__"
+          },
+          {
+            "pattern": "django-session"
+          }
+        ],
+        "headers": [
+          {
+            "header": "Set-Cookie",
+            "pattern": "csrftoken"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "csrftoken"
+          },
+          {
+            "pattern": "django_language"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "django"
+          }
+        ]
+      },
+      "implies": [
+        "Python"
+      ]
+    },
+    {
+      "slug": "flask",
+      "name": "Flask",
+      "website": "https://flask.palletsprojects.com",
+      "category": "framework",
+      "icon": "flask.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "Werkzeug"
+          },
+          {
+            "header": "X-Powered-By",
+            "pattern": "Flask"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "session=ey"
+          }
+        ]
+      },
+      "implies": [
+        "Python"
+      ]
+    },
+    {
+      "slug": "fastapi",
+      "name": "FastAPI",
+      "website": "https://fastapi.tiangolo.com",
+      "category": "framework",
+      "icon": "fastapi.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "swagger"
+          },
+          {
+            "pattern": "/openapi.json"
+          },
+          {
+            "pattern": "fastapi"
+          }
+        ],
+        "url": [
+          {
+            "pattern": "/docs"
+          },
+          {
+            "pattern": "/redoc"
+          }
+        ]
+      },
+      "implies": [
+        "Python"
+      ]
+    },
+    {
+      "slug": "python",
+      "name": "Python",
+      "website": "https://python.org",
+      "category": "programming",
+      "icon": "python.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "Python"
+          },
+          {
+            "header": "X-Powered-By",
+            "pattern": "Python"
+          },
+          {
+            "header": "Server",
+            "pattern": "Gunicorn"
+          },
+          {
+            "header": "Server",
+            "pattern": "uvicorn"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "gunicorn",
+      "name": "Gunicorn",
+      "website": "https://gunicorn.org",
+      "category": "server",
+      "icon": "gunicorn.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "gunicorn"
+          }
+        ]
+      },
+      "implies": [
+        "Python"
+      ]
+    },
+    {
+      "slug": "uvicorn",
+      "name": "Uvicorn",
+      "website": "https://www.uvicorn.org",
+      "category": "server",
+      "icon": "uvicorn.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "uvicorn"
+          }
+        ]
+      },
+      "implies": [
+        "Python"
+      ]
+    },
+    {
+      "slug": "mysql",
+      "name": "MySQL",
+      "website": "https://mysql.com",
+      "category": "database",
+      "icon": "mysql.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "X-Powered-By",
+            "pattern": "MySQL"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "postgresql",
+      "name": "PostgreSQL",
+      "website": "https://postgresql.org",
+      "category": "database",
+      "icon": "postgresql.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "X-Powered-By",
+            "pattern": "PostgreSQL"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "redis",
+      "name": "Redis",
+      "website": "https://redis.io",
+      "category": "database",
+      "icon": "redis.svg",
+      "detectors": {
+        "cookies": [
+          {
+            "pattern": "redis"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "google-analytics",
+      "name": "Google Analytics",
+      "website": "https://analytics.google.com",
+      "category": "analytics",
+      "icon": "google-analytics.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "google-analytics.com/analytics.js"
+          },
+          {
+            "pattern": "googletagmanager.com/gtag/js"
+          },
+          {
+            "pattern": "ga('create'"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "ga"
+          },
+          {
+            "pattern": "gtag"
+          },
+          {
+            "pattern": "_gaq"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "google-analytics.com"
+          },
+          {
+            "pattern": "googletagmanager.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "google-tag-manager",
+      "name": "Google Tag Manager",
+      "website": "https://tagmanager.google.com",
+      "category": "tag-managers",
+      "icon": "google-tag-manager.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "googletagmanager.com/gtm.js"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "dataLayer"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "googletagmanager.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "hotjar",
+      "name": "Hotjar",
+      "website": "https://hotjar.com",
+      "category": "analytics",
+      "icon": "hotjar.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "static.hotjar.com/c/hotjar-"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "hj"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "static.hotjar.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "stripe",
+      "name": "Stripe",
+      "website": "https://stripe.com",
+      "category": "payment",
+      "icon": "stripe.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "js.stripe.com"
+          },
+          {
+            "pattern": "stripe.com/v3"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "Stripe"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "js.stripe.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "paypal",
+      "name": "PayPal",
+      "website": "https://paypal.com",
+      "category": "payment",
+      "icon": "paypal.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "paypal.com/sdk/js"
+          },
+          {
+            "pattern": "paypalobjects.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "paypal"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "paypal.com"
+          },
+          {
+            "pattern": "paypalobjects.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "recaptcha",
+      "name": "reCAPTCHA",
+      "website": "https://recaptcha.net",
+      "category": "security",
+      "icon": "recaptcha.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "recaptcha/api.js"
+          },
+          {
+            "pattern": "g-recaptcha"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "grecaptcha"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "recaptcha"
+          },
+          {
+            "pattern": "www.google.com/recaptcha"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "cloudflare-turnstile",
+      "name": "Cloudflare Turnstile",
+      "website": "https://www.cloudflare.com/products/turnstile/",
+      "category": "security",
+      "icon": "cloudflare.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "challenges.cloudflare.com"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "challenges.cloudflare.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "vercel",
+      "name": "Vercel",
+      "website": "https://vercel.com",
+      "category": "hosting",
+      "icon": "vercel.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "X-Vercel-Id",
+            "pattern": ""
+          },
+          {
+            "header": "Server",
+            "pattern": "Vercel"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "netlify",
+      "name": "Netlify",
+      "website": "https://netlify.com",
+      "category": "hosting",
+      "icon": "netlify.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "Netlify"
+          },
+          {
+            "header": "X-NF-Request-Id",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "heroku",
+      "name": "Heroku",
+      "website": "https://heroku.com",
+      "category": "hosting",
+      "icon": "heroku.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Via",
+            "pattern": "1.1 vegur"
+          }
+        ],
+        "url": [
+          {
+            "pattern": ".herokuapp.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "aws",
+      "name": "Amazon Web Services",
+      "website": "https://aws.amazon.com",
+      "category": "hosting",
+      "icon": "aws.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "AmazonS3"
+          },
+          {
+            "header": "X-Amz-Cf-Id",
+            "pattern": ""
+          },
+          {
+            "header": "X-Amz-Request-Id",
+            "pattern": ""
+          }
+        ],
+        "url": [
+          {
+            "pattern": "amazonaws.com"
+          },
+          {
+            "pattern": "s3.amazonaws.com"
+          },
+          {
+            "pattern": "cloudfront.net"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "google-cloud",
+      "name": "Google Cloud",
+      "website": "https://cloud.google.com",
+      "category": "hosting",
+      "icon": "google-cloud.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "Google Frontend"
+          },
+          {
+            "header": "X-Cloud-Trace-Context",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "digitalocean",
+      "name": "DigitalOcean",
+      "website": "https://digitalocean.com",
+      "category": "hosting",
+      "icon": "digitalocean.svg",
+      "detectors": {
+        "url": [
+          {
+            "pattern": "digitaloceanspaces.com"
+          },
+          {
+            "pattern": ".digitalocean.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "cloudflare-pages",
+      "name": "Cloudflare Pages",
+      "website": "https://pages.cloudflare.com",
+      "category": "hosting",
+      "icon": "cloudflare.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "cf-ray",
+            "pattern": ""
+          }
+        ],
+        "url": [
+          {
+            "pattern": ".pages.dev"
+          }
+        ]
+      },
+      "implies": [
+        "Cloudflare"
+      ]
+    },
+    {
+      "slug": "font-awesome",
+      "name": "Font Awesome",
+      "website": "https://fontawesome.com",
+      "category": "fonts",
+      "icon": "font-awesome.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "font-awesome"
+          },
+          {
+            "pattern": "fa-solid"
+          },
+          {
+            "pattern": "fa-brands"
+          }
+        ],
+        "css": [
+          {
+            "pattern": "font-awesome"
+          },
+          {
+            "pattern": "fontawesome"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "google-fonts",
+      "name": "Google Fonts",
+      "website": "https://fonts.google.com",
+      "category": "fonts",
+      "icon": "google.svg",
+      "detectors": {
+        "css": [
+          {
+            "pattern": "fonts.googleapis.com"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "fonts.googleapis.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "webpack",
+      "name": "webpack",
+      "website": "https://webpack.js.org",
+      "category": "build-tool",
+      "icon": "webpack.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "__webpack_require__"
+          },
+          {
+            "pattern": "webpackJsonp"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "webpackChunk"
+          },
+          {
+            "pattern": "__webpack_require__"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "bundle.js"
+          },
+          {
+            "pattern": "main.js"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "vite",
+      "name": "Vite",
+      "website": "https://vitejs.dev",
+      "category": "build-tool",
+      "icon": "vite.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "/@vite/client"
+          },
+          {
+            "pattern": "/@vite/"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "/@vite/"
+          },
+          {
+            "pattern": "assets/index"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "turbopack",
+      "name": "Turbopack",
+      "website": "https://turbo.build/pack",
+      "category": "build-tool",
+      "icon": "turbopack.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "/_next/static/chunks/"
+          },
+          {
+            "pattern": "turbopack"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "typescript",
+      "name": "TypeScript",
+      "website": "https://typescriptlang.org",
+      "category": "programming",
+      "icon": "typescript.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": ".tsx"
+          },
+          {
+            "pattern": ".ts\""
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": ".tsx"
+          },
+          {
+            "pattern": ".ts\""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "graphql",
+      "name": "GraphQL",
+      "website": "https://graphql.org",
+      "category": "api",
+      "icon": "graphql.svg",
+      "detectors": {
+        "url": [
+          {
+            "pattern": "/graphql"
+          },
+          {
+            "pattern": "/graphiql"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "graphql"
+          },
+          {
+            "pattern": "__schema"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "elasticsearch",
+      "name": "Elasticsearch",
+      "website": "https://elastic.co",
+      "category": "database",
+      "icon": "elasticsearch.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "X-elastic-product",
+            "pattern": "Elasticsearch"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "openresty",
+      "name": "OpenResty",
+      "website": "https://openresty.org",
+      "category": "server",
+      "icon": "openresty.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "openresty"
+          }
+        ]
+      },
+      "implies": [
+        "nginx",
+        "Lua"
+      ]
+    },
+    {
+      "slug": "caddy",
+      "name": "Caddy",
+      "website": "https://caddyserver.com",
+      "category": "server",
+      "icon": "caddy.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "Caddy"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "remix",
+      "name": "Remix",
+      "website": "https://remix.run",
+      "category": "framework",
+      "icon": "remix.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "__remixContext"
+          },
+          {
+            "pattern": "__remixManifest"
+          },
+          {
+            "pattern": "/build/_assets/"
+          },
+          {
+            "pattern": "data-remix-managed-head"
+          },
+          {
+            "pattern": "window.__remixRouteModules"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "__remixContext"
+          },
+          {
+            "pattern": "__remixManifest"
+          },
+          {
+            "pattern": "__remixRouteModules"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "/build/_assets/remix"
+          },
+          {
+            "pattern": "@remix-run"
+          }
+        ]
+      },
+      "implies": [
+        "React",
+        "Node.js"
+      ]
+    },
+    {
+      "slug": "sveltekit",
+      "name": "SvelteKit",
+      "website": "https://kit.svelte.dev",
+      "category": "framework",
+      "icon": "sveltekit.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "data-sveltekit"
+          },
+          {
+            "pattern": "__sveltekit_"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "__sveltekit_"
+          },
+          {
+            "pattern": "$app"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "_app/immutable/"
+          }
+        ]
+      },
+      "implies": [
+        "Svelte",
+        "Node.js"
+      ]
+    },
+    {
+      "slug": "svelte",
+      "name": "Svelte",
+      "website": "https://svelte.dev",
+      "category": "javascript",
+      "icon": "svelte.svg",
+      "detectors": {
+        "js_globals": [
+          {
+            "pattern": "__svelte"
+          },
+          {
+            "pattern": "svelte_internal"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "svelte/internal"
+          },
+          {
+            "pattern": "sveltejs"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "astro",
+      "name": "Astro",
+      "website": "https://astro.build",
+      "category": "framework",
+      "icon": "astro.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "data-astro-cid"
+          },
+          {
+            "pattern": "data-astro-source-file"
+          },
+          {
+            "pattern": "astro-island"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "Astro"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "_astro/"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "woocommerce",
+      "name": "WooCommerce",
+      "website": "https://woocommerce.com",
+      "category": "ecommerce",
+      "icon": "woocommerce.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "woocommerce.min.css"
+          },
+          {
+            "pattern": "woocommerce-js"
+          },
+          {
+            "pattern": "wc-block-components"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "woocommerce"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "woocommerce_"
+          }
+        ]
+      },
+      "implies": [
+        "WordPress",
+        "PHP"
+      ]
+    },
+    {
+      "slug": "magento",
+      "name": "Magento",
+      "website": "https://magento.com",
+      "category": "ecommerce",
+      "icon": "magento.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "Magento_"
+          },
+          {
+            "pattern": "/skin/frontend/"
+          },
+          {
+            "pattern": "mage/cookies/"
+          },
+          {
+            "pattern": "Magento_Cookie"
+          },
+          {
+            "pattern": "Magento\""
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "mage-cache"
+          },
+          {
+            "pattern": "mage-messages"
+          }
+        ],
+        "headers": [
+          {
+            "header": "Set-Cookie",
+            "pattern": "frontend="
+          }
+        ]
+      },
+      "implies": [
+        "PHP"
+      ]
+    },
+    {
+      "slug": "bigcommerce",
+      "name": "BigCommerce",
+      "website": "https://www.bigcommerce.com",
+      "category": "ecommerce",
+      "icon": "bigcommerce.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "cdn11.bigcommerce.com"
+          },
+          {
+            "pattern": "bigcommerce.config.js"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "bigcommerce.com"
+          }
+        ],
+        "headers": [
+          {
+            "header": "X-BC-Request-Id",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "wix",
+      "name": "Wix",
+      "website": "https://wix.com",
+      "category": "cms",
+      "icon": "wix.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "static.wixstatic.com"
+          },
+          {
+            "pattern": "wix.com"
+          },
+          {
+            "pattern": "_wixCIDX"
+          },
+          {
+            "pattern": "wix-bolt"
+          }
+        ],
+        "headers": [
+          {
+            "header": "X-Wix-Request-Id",
+            "pattern": ""
+          },
+          {
+            "header": "Server",
+            "pattern": "Wix.com"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "static.wixstatic.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "squarespace",
+      "name": "Squarespace",
+      "website": "https://squarespace.com",
+      "category": "cms",
+      "icon": "squarespace.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "squarespace.com"
+          },
+          {
+            "pattern": "static.squarespace.com"
+          },
+          {
+            "pattern": "Squarespace.Forms"
+          }
+        ],
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "Squarespace"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "static.squarespace.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "webflow",
+      "name": "Webflow",
+      "website": "https://webflow.com",
+      "category": "cms",
+      "icon": "webflow.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "assets-global.website-files.com"
+          },
+          {
+            "pattern": "webflow-badge"
+          },
+          {
+            "pattern": "data-wf-domain"
+          },
+          {
+            "pattern": "data-wf-site"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "website-files.com"
+          }
+        ],
+        "css": [
+          {
+            "pattern": "webflow.css"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "mixpanel",
+      "name": "Mixpanel",
+      "website": "https://mixpanel.com",
+      "category": "analytics",
+      "icon": "mixpanel.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "cdn.mxpnl.com"
+          },
+          {
+            "pattern": "mixpanel.init"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "mixpanel"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "cdn.mxpnl.com"
+          },
+          {
+            "pattern": "mixpanel"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "amplitude",
+      "name": "Amplitude",
+      "website": "https://amplitude.com",
+      "category": "analytics",
+      "icon": "amplitude.svg",
+      "detectors": {
+        "js_globals": [
+          {
+            "pattern": "amplitude"
+          },
+          {
+            "pattern": "Amplitude"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "cdn.amplitude.com"
+          },
+          {
+            "pattern": "amplitude.min.js"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "segment",
+      "name": "Segment",
+      "website": "https://segment.com",
+      "category": "tag-managers",
+      "icon": "segment.svg",
+      "detectors": {
+        "js_globals": [
+          {
+            "pattern": "analytics"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "cdn.segment.com"
+          },
+          {
+            "pattern": "segment.com/analytics.js"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "analytics.identify"
+          },
+          {
+            "pattern": "analytics.track"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "render",
+      "name": "Render",
+      "website": "https://render.com",
+      "category": "hosting",
+      "icon": "render.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "Render"
+          },
+          {
+            "header": "X-Render-Origin-Server",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "railway",
+      "name": "Railway",
+      "website": "https://railway.app",
+      "category": "hosting",
+      "icon": "railway.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "railway"
+          },
+          {
+            "header": "X-Railway-Request-Id",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "flyio",
+      "name": "Fly.io",
+      "website": "https://fly.io",
+      "category": "hosting",
+      "icon": "fly.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "Fly"
+          },
+          {
+            "header": "Fly-Request-Id",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "algolia",
+      "name": "Algolia",
+      "website": "https://algolia.com",
+      "category": "api",
+      "icon": "algolia.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "algolia.net"
+          },
+          {
+            "pattern": "algolianet.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "algoliasearch"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "algolia.net"
+          },
+          {
+            "pattern": "algoliasearch"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "fastly",
+      "name": "Fastly",
+      "website": "https://fastly.com",
+      "category": "cdn",
+      "icon": "fastly.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "Fastly"
+          },
+          {
+            "header": "X-Served-By",
+            "pattern": "cache-"
+          },
+          {
+            "header": "X-Fastly-Request-ID",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "bunnycdn",
+      "name": "BunnyCDN",
+      "website": "https://bunny.net",
+      "category": "cdn",
+      "icon": "bunnycdn.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "BunnyCDN"
+          },
+          {
+            "header": "cdn-pullzone",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "rollup",
+      "name": "Rollup",
+      "website": "https://rollupjs.org",
+      "category": "build-tool",
+      "icon": "rollup.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "/*rollup*/"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "rollup.js"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "esbuild",
+      "name": "esbuild",
+      "website": "https://esbuild.github.io",
+      "category": "build-tool",
+      "icon": "esbuild.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "/* esbuild */"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "esbuild"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "parcel",
+      "name": "Parcel",
+      "website": "https://parceljs.org",
+      "category": "build-tool",
+      "icon": "parcel.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "parcelRequire"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "parcelRequire"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "adobe-fonts",
+      "name": "Adobe Fonts",
+      "website": "https://fonts.adobe.com",
+      "category": "fonts",
+      "icon": "adobe-fonts.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "use.typekit.net"
+          },
+          {
+            "pattern": "fonts.adobe.com"
+          }
+        ],
+        "css": [
+          {
+            "pattern": "typekit.net"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "sentry",
+      "name": "Sentry",
+      "website": "https://sentry.io",
+      "category": "analytics",
+      "icon": "sentry.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "browser.sentry-cdn.com"
+          },
+          {
+            "pattern": "sentry.io"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "Sentry"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "browser.sentry-cdn.com"
+          },
+          {
+            "pattern": "sentry.io/api/"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "datadog-rum",
+      "name": "Datadog RUM",
+      "website": "https://www.datadoghq.com",
+      "category": "analytics",
+      "icon": "datadog.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "datadoghq.com/browser-sdk"
+          },
+          {
+            "pattern": "dd-rum"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "DD_RUM"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "datadoghq.com/browser-sdk"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "mailchimp",
+      "name": "Mailchimp",
+      "website": "https://mailchimp.com",
+      "category": "advertising",
+      "icon": "mailchimp.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "chimpstatic.com"
+          },
+          {
+            "pattern": "list-manage.com"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "chimpstatic.com"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "_AVESTA_"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "klaviyo",
+      "name": "Klaviyo",
+      "website": "https://klaviyo.com",
+      "category": "advertising",
+      "icon": "klaviyo.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "static.klaviyo.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "_klaviyo"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "static.klaviyo.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "yoast",
+      "name": "Yoast SEO",
+      "website": "https://yoast.com",
+      "category": "seo",
+      "icon": "yoast.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "yoast-schema-graph"
+          },
+          {
+            "pattern": "wp-content/plugins/wordpress-seo"
+          }
+        ],
+        "meta": [
+          {
+            "name": "generator",
+            "pattern": "Yoast"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "elementor",
+      "name": "Elementor",
+      "website": "https://elementor.com",
+      "category": "cms",
+      "icon": "elementor.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "elementor-"
+          },
+          {
+            "pattern": "elementor/assets"
+          }
+        ],
+        "css": [
+          {
+            "pattern": "elementor"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "elementor"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "hubspot",
+      "name": "HubSpot",
+      "website": "https://hubspot.com",
+      "category": "advertising",
+      "icon": "hubspot.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "js.hsforms.net"
+          },
+          {
+            "pattern": "hubspot.com"
+          },
+          {
+            "pattern": "hsadspixel.net"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "js.hsforms.net"
+          },
+          {
+            "pattern": "hs-scripts.com"
+          },
+          {
+            "pattern": "hs-analytics.net"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "_hsq"
+          },
+          {
+            "pattern": "hbspt"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "hubspotutk"
+          },
+          {
+            "pattern": "__hssc"
+          },
+          {
+            "pattern": "__hssrc"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "activecampaign",
+      "name": "ActiveCampaign",
+      "website": "https://activecampaign.com",
+      "category": "advertising",
+      "icon": "activecampaign.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "activehosted.com"
+          },
+          {
+            "pattern": "trackcmp.net"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "trackcmp.net"
+          },
+          {
+            "pattern": "activehosted.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "convertkit",
+      "name": "ConvertKit",
+      "website": "https://convertkit.com",
+      "category": "advertising",
+      "icon": "convertkit.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "convertkit.com"
+          },
+          {
+            "pattern": "ck.page"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "convertkit.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "brevo",
+      "name": "Brevo",
+      "website": "https://brevo.com",
+      "category": "advertising",
+      "icon": "brevo.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "sib-cdn.com"
+          },
+          {
+            "pattern": "sendinblue.com"
+          },
+          {
+            "pattern": "brevo.com"
+          },
+          {
+            "pattern": "sibautomation.com"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "sib-cdn.com"
+          },
+          {
+            "pattern": "sendinblue.com"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "sib_cuid"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "sendgrid",
+      "name": "Sendgrid",
+      "website": "https://sendgrid.com",
+      "category": "advertising",
+      "icon": "sendgrid.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "sendgrid.net"
+          },
+          {
+            "pattern": "sendgrid.com"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "sendgrid.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "mailgun",
+      "name": "Mailgun",
+      "website": "https://mailgun.com",
+      "category": "advertising",
+      "icon": "mailgun.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "mailgun.com"
+          },
+          {
+            "pattern": "mgcdn.com"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "mailgun.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "marketo",
+      "name": "Marketo",
+      "website": "https://marketo.com",
+      "category": "advertising",
+      "icon": "marketo.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "marketo.com"
+          },
+          {
+            "pattern": "munchkin.js"
+          },
+          {
+            "pattern": "marketo.net"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "munchkin.js"
+          },
+          {
+            "pattern": "marketo.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "Munchkin"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "omnisend",
+      "name": "Omnisend",
+      "website": "https://omnisend.com",
+      "category": "advertising",
+      "icon": "omnisend.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "omnisend.com"
+          },
+          {
+            "pattern": "omnisnippet"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "omnisend.com"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "omnisendAccountID"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "sumo",
+      "name": "Sumo",
+      "website": "https://sumo.com",
+      "category": "advertising",
+      "icon": "sumo.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "sumo.com"
+          },
+          {
+            "pattern": "load.sumo.com"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "load.sumo.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "sumo"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "facebook-pixel",
+      "name": "Facebook Pixel",
+      "website": "https://facebook.com/business/tools/meta-pixel",
+      "category": "advertising",
+      "icon": "facebook.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "connect.facebook.net/en_US/fbevents.js"
+          },
+          {
+            "pattern": "fbq('init'"
+          },
+          {
+            "pattern": "fbq('track'"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "connect.facebook.net"
+          },
+          {
+            "pattern": "fbevents.js"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "fbq"
+          },
+          {
+            "pattern": "_fbq"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "tiktok-pixel",
+      "name": "TikTok Pixel",
+      "website": "https://ads.tiktok.com",
+      "category": "advertising",
+      "icon": "tiktok.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "analytics.tiktok.com"
+          },
+          {
+            "pattern": "ttq.load"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "analytics.tiktok.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "ttq"
+          },
+          {
+            "pattern": "_ttq"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "pinterest-tag",
+      "name": "Pinterest Tag",
+      "website": "https://business.pinterest.com",
+      "category": "advertising",
+      "icon": "pinterest.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "s.pinimg.com/ct"
+          },
+          {
+            "pattern": "pintrk"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "s.pinimg.com/ct"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "pintrk"
+          },
+          {
+            "pattern": "_pinterest_loaded"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "linkedin-insight",
+      "name": "LinkedIn Insight",
+      "website": "https://linkedin.com",
+      "category": "advertising",
+      "icon": "linkedin.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "snap.licdn.com/li.lms-analytics"
+          },
+          {
+            "pattern": "_linkedin_partner_id"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "snap.licdn.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "_linkedin_partner_id"
+          },
+          {
+            "pattern": "lintrk"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "bing-ads",
+      "name": "Microsoft Ads",
+      "website": "https://ads.microsoft.com",
+      "category": "advertising",
+      "icon": "bing-ads.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "bat.bing.com"
+          },
+          {
+            "pattern": "uetq"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "bat.bing.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "uetq"
+          },
+          {
+            "pattern": "UET"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "google-ads",
+      "name": "Google Ads",
+      "website": "https://ads.google.com",
+      "category": "advertising",
+      "icon": "google-ads.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "googleadservices.com"
+          },
+          {
+            "pattern": "AW-"
+          },
+          {
+            "pattern": "google_conversion_id"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "googleadservices.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "gtag"
+          },
+          {
+            "pattern": "google_tag_data"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "taboola",
+      "name": "Taboola",
+      "website": "https://taboola.com",
+      "category": "advertising",
+      "icon": "taboola.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "cdn.taboola.com"
+          },
+          {
+            "pattern": "taboola"
+          }
+        ],
+        "scripts": [
+          {
+            "pattern": "cdn.taboola.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "_taboola"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "intercom",
+      "name": "Intercom",
+      "website": "https://intercom.com",
+      "category": "live-chat",
+      "icon": "intercom.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "widget.intercom.io"
+          },
+          {
+            "pattern": "intercom.io/widget"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "Intercom"
+          },
+          {
+            "pattern": "intercomSettings"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "intercom-id"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "crisp",
+      "name": "Crisp",
+      "website": "https://crisp.chat",
+      "category": "live-chat",
+      "icon": "crisp.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "client.crisp.chat"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "CRISP_WEBSITE_ID"
+          },
+          {
+            "pattern": "$crisp"
+          },
+          {
+            "pattern": "Crisp"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "tawkto",
+      "name": "Tawk.to",
+      "website": "https://tawk.to",
+      "category": "live-chat",
+      "icon": "tawkto.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "embed.tawk.to"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "Tawk_API"
+          },
+          {
+            "pattern": "Tawk"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "drift",
+      "name": "Drift",
+      "website": "https://drift.com",
+      "category": "live-chat",
+      "icon": "drift.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "js.driftt.com"
+          },
+          {
+            "pattern": "widget.drift.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "drift"
+          },
+          {
+            "pattern": "Drift"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "zopim",
+      "name": "Zendesk Chat",
+      "website": "https://zendesk.com/chat",
+      "category": "live-chat",
+      "icon": "zendesk.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "v2.zopim.com"
+          },
+          {
+            "pattern": "static.zdassets.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "$zopim"
+          },
+          {
+            "pattern": "zE"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "tidio",
+      "name": "Tidio",
+      "website": "https://tidio.com",
+      "category": "live-chat",
+      "icon": "tidio.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "code.tidio.co"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "tidio"
+          },
+          {
+            "pattern": "Tidio"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "plausible",
+      "name": "Plausible",
+      "website": "https://plausible.io",
+      "category": "analytics",
+      "icon": "plausible.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "plausible.io/js"
+          },
+          {
+            "pattern": "plausible.js"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "plausible"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "matomo",
+      "name": "Matomo",
+      "website": "https://matomo.org",
+      "category": "analytics",
+      "icon": "matomo.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "matomo.js"
+          },
+          {
+            "pattern": "piwik.js"
+          },
+          {
+            "pattern": "matomo.php"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "_paq"
+          },
+          {
+            "pattern": "Matomo"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "_pk_id"
+          },
+          {
+            "pattern": "_pk_ses"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "fathom",
+      "name": "Fathom",
+      "website": "https://usefathom.com",
+      "category": "analytics",
+      "icon": "fathom.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "cdn.usefathom.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "fathom"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "heap",
+      "name": "Heap",
+      "website": "https://heap.io",
+      "category": "analytics",
+      "icon": "heap.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "cdn.heapanalytics.com"
+          },
+          {
+            "pattern": "heapanalytics.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "heap"
+          },
+          {
+            "pattern": "Heap"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "fullstory",
+      "name": "FullStory",
+      "website": "https://fullstory.com",
+      "category": "analytics",
+      "icon": "fullstory.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "edge.fullstory.com"
+          },
+          {
+            "pattern": "fullstory.com/s/fs.js"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "FS"
+          },
+          {
+            "pattern": "_fs_namespace"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "mouseflow",
+      "name": "Mouseflow",
+      "website": "https://mouseflow.com",
+      "category": "analytics",
+      "icon": "mouseflow.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "mouseflow.com"
+          },
+          {
+            "pattern": "cdn.mouseflow.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "_mfq"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "mf_"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "logrocket",
+      "name": "LogRocket",
+      "website": "https://logrocket.com",
+      "category": "analytics",
+      "icon": "logrocket.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "cdn.logrocket.io"
+          },
+          {
+            "pattern": "cdn.lr-in.com"
+          },
+          {
+            "pattern": "cdn.lr-in-prod.com"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "LogRocket"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "clarity",
+      "name": "Microsoft Clarity",
+      "website": "https://clarity.microsoft.com",
+      "category": "analytics",
+      "icon": "clarity.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "clarity.ms"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "clarity"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "_clck"
+          },
+          {
+            "pattern": "_clsk"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "jsdelivr",
+      "name": "jsDelivr",
+      "website": "https://jsdelivr.com",
+      "category": "cdn",
+      "icon": "jsdelivr.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "cdn.jsdelivr.net"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "unpkg",
+      "name": "unpkg",
+      "website": "https://unpkg.com",
+      "category": "cdn",
+      "icon": "unpkg.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "unpkg.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "akamai",
+      "name": "Akamai",
+      "website": "https://akamai.com",
+      "category": "cdn",
+      "icon": "akamai.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "X-Akamai-Transformed",
+            "pattern": ""
+          },
+          {
+            "header": "Server",
+            "pattern": "AkamaiGHost"
+          },
+          {
+            "header": "X-Akamai-Session-Info",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "keycdn",
+      "name": "KeyCDN",
+      "website": "https://keycdn.com",
+      "category": "cdn",
+      "icon": "keycdn.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "Server",
+            "pattern": "keycdn"
+          },
+          {
+            "header": "X-Edge-Location",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "gatsby",
+      "name": "Gatsby",
+      "website": "https://gatsbyjs.com",
+      "category": "framework",
+      "icon": "gatsby.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "___gatsby"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "___gatsby"
+          },
+          {
+            "pattern": "Gatsby"
+          }
+        ],
+        "meta": [
+          {
+            "name": "generator",
+            "pattern": "Gatsby"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "hugo",
+      "name": "Hugo",
+      "website": "https://gohugo.io",
+      "category": "framework",
+      "icon": "hugo.svg",
+      "detectors": {
+        "meta": [
+          {
+            "name": "generator",
+            "pattern": "Hugo"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "jekyll",
+      "name": "Jekyll",
+      "website": "https://jekyllrb.com",
+      "category": "framework",
+      "icon": "jekyll.svg",
+      "detectors": {
+        "meta": [
+          {
+            "name": "generator",
+            "pattern": "Jekyll"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "/_includes/"
+          },
+          {
+            "pattern": "jekyll"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "strapi",
+      "name": "Strapi",
+      "website": "https://strapi.io",
+      "category": "framework",
+      "icon": "strapi.svg",
+      "detectors": {
+        "headers": [
+          {
+            "header": "X-Powered-By",
+            "pattern": "Strapi"
+          },
+          {
+            "header": "Server",
+            "pattern": "Strapi"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "strapi"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "tealium",
+      "name": "Tealium",
+      "website": "https://tealium.com",
+      "category": "tag-managers",
+      "icon": "tealium.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "tags.tiqcdn.com"
+          },
+          {
+            "pattern": "tealiumiq.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "adobe-launch",
+      "name": "Adobe Experience Platform Launch",
+      "website": "https://business.adobe.com/products/experience-platform/launch.html",
+      "category": "tag-managers",
+      "icon": "adobe.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "assets.adobedtm.com"
+          },
+          {
+            "pattern": "launch-"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "assets.adobedtm.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "onetrust",
+      "name": "OneTrust",
+      "website": "https://onetrust.com",
+      "category": "cookie-compliance",
+      "icon": "onetrust.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "cdn.cookielaw.org"
+          },
+          {
+            "pattern": "optanon.blob.core"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "cookielaw.org"
+          },
+          {
+            "pattern": "optanon.blob.core"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "OptanonConsent"
+          },
+          {
+            "pattern": "OptanonAlertBoxClosed"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "cookiebot",
+      "name": "Cookiebot",
+      "website": "https://cookiebot.com",
+      "category": "cookie-compliance",
+      "icon": "cookiebot.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "consent.cookiebot.com"
+          },
+          {
+            "pattern": "cookiebot.com/uc.js"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "CookieConsent"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "CookieConsent"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "cookieyes",
+      "name": "CookieYes",
+      "website": "https://cookieyes.com",
+      "category": "cookie-compliance",
+      "icon": "cookieyes.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "cdn-cookieyes.com"
+          },
+          {
+            "pattern": "cookieyes.com"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "cookie-law-info-bar"
+          },
+          {
+            "pattern": "cookieyes"
+          }
+        ],
+        "cookies": [
+          {
+            "pattern": "cookieyes-consent"
+          },
+          {
+            "pattern": "cky-consent"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "iubenda",
+      "name": "Iubenda",
+      "website": "https://iubenda.com",
+      "category": "cookie-compliance",
+      "icon": "iubenda.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "cdn.iubenda.com"
+          },
+          {
+            "pattern": "iubenda.com/cs.js"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "iubenda.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "trustarc",
+      "name": "TrustArc",
+      "website": "https://trustarc.com",
+      "category": "cookie-compliance",
+      "icon": "trustarc.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "consent.trustarc.com"
+          },
+          {
+            "pattern": "trustarc.com"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "trustarc.com"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "boomerang",
+      "name": "Boomerang",
+      "website": "https://akamai.com/boomerang",
+      "category": "performance",
+      "icon": "boomerang.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "akamaihd.net/boomerang"
+          },
+          {
+            "pattern": "/boomerang/"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "BOOMR"
+          },
+          {
+            "pattern": "BOOMR_mkt"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "nitropack",
+      "name": "NitroPack",
+      "website": "https://nitropack.io",
+      "category": "performance",
+      "icon": "nitropack.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "nitropack.io"
+          },
+          {
+            "pattern": "nitropack.com"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "nitropack"
+          }
+        ],
+        "headers": [
+          {
+            "header": "x-nitro-cache",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "speedcurve",
+      "name": "SpeedCurve",
+      "website": "https://speedcurve.com",
+      "category": "performance",
+      "icon": "speedcurve.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "speedcurve.com"
+          },
+          {
+            "pattern": "lux.speedcurve.com"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "speedcurve"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "new-relic-browser",
+      "name": "New Relic Browser",
+      "website": "https://newrelic.com/platform/browser-monitoring",
+      "category": "performance",
+      "icon": "newrelic.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "js-agent.newrelic.com"
+          },
+          {
+            "pattern": "nr-data.net"
+          }
+        ],
+        "js_globals": [
+          {
+            "pattern": "NREUM"
+          },
+          {
+            "pattern": "newrelic"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "ahrefs",
+      "name": "Ahrefs",
+      "website": "https://ahrefs.com",
+      "category": "seo",
+      "icon": "ahrefs.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "ahrefs.com/siteaudit"
+          },
+          {
+            "pattern": "ahrefs-site-verification"
+          }
+        ],
+        "headers": [
+          {
+            "header": "x-ahrefs-site-verification",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "semrush",
+      "name": "Semrush",
+      "website": "https://semrush.com",
+      "category": "seo",
+      "icon": "semrush.svg",
+      "detectors": {
+        "html": [
+          {
+            "pattern": "semrush.com/sa/"
+          },
+          {
+            "pattern": "semrush-verification"
+          }
+        ],
+        "headers": [
+          {
+            "header": "x-semrush-verification",
+            "pattern": ""
+          }
+        ]
+      }
+    },
+    {
+      "slug": "google-maps",
+      "name": "Google Maps",
+      "website": "https://developers.google.com/maps",
+      "category": "maps",
+      "icon": "googlemaps.svg",
+      "detectors": {
+        "scripts": [
+          {
+            "pattern": "maps.googleapis.com"
+          },
+          {
+            "pattern": "maps.google.com/maps/api"
+          }
+        ],
+        "html": [
+          {
+            "pattern": "google.com/maps/embed"
+          },
+          {
+            "pattern": "google.com/maps"
+          }
+        ]
+      }
+    }
+  ],
+  "_meta": {
+    "wappalyzer_style_categories": [
+      "advertising",
+      "analytics",
+      "api",
+      "build-tool",
+      "cdn",
+      "cms",
+      "cookie-compliance",
+      "css",
+      "database",
+      "ecommerce",
+      "fonts",
+      "framework",
+      "hosting",
+      "javascript",
+      "live-chat",
+      "maps",
+      "payment",
+      "performance",
+      "programming",
+      "security",
+      "seo",
+      "server",
+      "tag-managers"
+    ]
+  }
+}

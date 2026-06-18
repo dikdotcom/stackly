@@ -1,0 +1,359 @@
+openapi: 3.0.3
+info:
+  title: Stackly API
+  description: |
+    Tech stack detection API — identify what technologies a website uses
+    (CMS, frameworks, hosting, analytics, payment, CDN, etc).
+
+    Inspired by Wappalyzer; uses its own fingerprint database.
+  version: "1.0"
+  contact:
+    name: Andika
+    url: https://github.com/dikdotcom/stackly
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:8890
+    description: Local development
+  - url: https://stackly.example.com
+    description: Production (configure your domain)
+
+tags:
+  - name: scan
+    description: Scan URLs for tech stacks
+  - name: jobs
+    description: Job queue inspection
+  - name: cache
+    description: Result cache management
+  - name: auth
+    description: Auth + usage stats
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key from user store
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: API key or JWT (HS256, set STACKLY_JWT_SECRET to enable)
+    BasicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth (configured via STACKLY_BASIC_USERS)
+
+  schemas:
+    ScanRequest:
+      type: object
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
+          example: "https://react.dev"
+          description: HTTP/HTTPS URL to scan
+        options:
+          type: object
+          description: Optional scan overrides
+
+    ScanJob:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Job ID (also used to fetch results)
+        url:
+          type: string
+        status:
+          type: string
+          enum: [pending, running, completed, failed]
+        created_at:
+          type: string
+          format: date-time
+        started_at:
+          type: string
+          format: date-time
+        finished_at:
+          type: string
+          format: date-time
+        duration:
+          type: string
+          example: "4.5s"
+
+    ScanResult:
+      type: object
+      properties:
+        id:
+          type: string
+        url:
+          type: string
+        status:
+          type: string
+        detected:
+          type: array
+          items:
+            type: string
+          description: (compact mode) Flat list of detected tech names
+        implied:
+          type: array
+          items:
+            type: string
+        categories:
+          type: array
+          items:
+            type: string
+        duration:
+          type: string
+        result:
+          type: object
+          description: (full mode) Full scan output
+
+    CacheStats:
+      type: object
+      properties:
+        size:
+          type: integer
+        valid:
+          type: integer
+        hits:
+          type: integer
+        misses:
+          integer
+        hit_rate:
+          type: number
+          format: float
+        ttl:
+          type: string
+
+    AuthStats:
+      type: object
+      properties:
+        auth_enabled:
+          type: boolean
+        users:
+          type: integer
+        admin_users:
+          type: integer
+        jwt_enabled:
+          type: boolean
+        active_buckets:
+          type: integer
+        window:
+          type: string
+
+    UserUsage:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tier:
+          type: string
+          enum: [free, basic, pro, admin]
+        rate_limit:
+          type: integer
+        request_count:
+          type: integer
+          format: int64
+        created_at:
+          type: string
+          format: date-time
+        last_seen_at:
+          type: string
+          format: date-time
+        key_preview:
+          type: string
+          example: "sk_t...1234"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "missing or invalid API key"
+
+security:
+  - ApiKeyAuth: []
+  - BearerAuth: []
+  - BasicAuth: []
+  - {}
+
+paths:
+  /api/health:
+    get:
+      summary: Health check (no auth)
+      tags: [scan]
+      security: []
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  time:
+                    type: string
+                    format: date-time
+
+  /api/scan:
+    post:
+      summary: Submit URL for scanning
+      tags: [scan]
+      parameters:
+        - name: wait
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Block until scan completes (sync mode)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanRequest'
+      responses:
+        '200':
+          description: Scan submitted (or completed if ?wait=true)
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ScanJob'
+                  - $ref: '#/components/schemas/ScanResult'
+        '401':
+          description: Missing or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limit exceeded
+
+  /api/results/{id}:
+    get:
+      summary: Get scan results by job ID
+      tags: [scan]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: compact
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Return flat detected/implied/categories instead of full result
+      responses:
+        '200':
+          description: Scan results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanResult'
+
+  /api/jobs:
+    get:
+      summary: List recent jobs
+      tags: [jobs]
+      responses:
+        '200':
+          description: Job list
+
+  /api/stats:
+    get:
+      summary: Queue + cache stats
+      tags: [jobs, cache]
+      responses:
+        '200':
+          description: Combined stats
+
+  /api/cache/stats:
+    get:
+      summary: Cache statistics
+      tags: [cache]
+      responses:
+        '200':
+          description: Cache stats
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CacheStats'
+
+  /api/cache/clear:
+    post:
+      summary: Clear cache
+      tags: [cache]
+      responses:
+        '200':
+          description: Cache cleared
+
+  /api/auth/stats:
+    get:
+      summary: Auth + rate-limit stats
+      tags: [auth]
+      responses:
+        '200':
+          description: Auth stats
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthStats'
+
+  /api/auth/usage:
+    get:
+      summary: Your usage stats
+      tags: [auth]
+      responses:
+        '200':
+          description: Usage for calling user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUsage'
+
+  /api/auth/users:
+    get:
+      summary: List all users (admin only)
+      tags: [auth]
+      responses:
+        '200':
+          description: All users with usage counts
+        '403':
+          description: Admin tier required
+
+  /api/docs:
+    get:
+      summary: OpenAPI spec (this document)
+      tags: [scan]
+      security: []
+      responses:
+        '200':
+          description: YAML spec
+          content:
+            application/yaml:
+              schema:
+                type: string
+
+  /api/docs/ui:
+    get:
+      summary: Swagger UI
+      tags: [scan]
+      security: []
+      responses:
+        '200':
+          description: HTML page
+          content:
+            text/html:
+              schema:
+                type: string

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stackly — Tech Stack Detector</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+            sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+          },
+          colors: {
+            bg: { base: '#0F172A', surface: '#1E293B', elevated: '#334155' },
+            accent: { DEFAULT: '#22C55E', dim: '#16A34A', glow: '#22C55E33' }
+          },
+          animation: {
+            'fade-in': 'fade-in 0.4s ease-out',
+            'slide-up': 'slide-up 0.4s ease-out',
+            'pulse-slow': 'pulse 3s ease-in-out infinite'
+          },
+          keyframes: {
+            'fade-in': {
+              '0%': { opacity: 0 },
+              '100%': { opacity: 1 }
+            },
+            'slide-up': {
+              '0%': { opacity: 0, transform: 'translateY(20px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'DM Sans', system-ui, sans-serif; }
+    .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; letter-spacing: -0.02em; }
+    .gradient-text {
+      background: linear-gradient(135deg, #22C55E 0%, #06B6D4 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .glow-ring { box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.1), 0 8px 32px -8px rgba(34, 197, 94, 0.3); }
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .tech-pill { transition: all 200ms ease; }
+    .tech-pill:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px -2px rgba(34, 197, 94, 0.2);
+    }
+    .tech-icon { width: 18px; height: 18px; flex-shrink: 0; border-radius: 4px; }
+    .tech-icon-lg { width: 32px; height: 32px; flex-shrink: 0; border-radius: 6px; }
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    .loading-dot { animation: dot-pulse 1.4s ease-in-out infinite; }
+    .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    /* Tab bar */
+    .tab-btn { position: relative; }
+    .tab-btn.active { color: #22C55E; }
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 2px; background: #22C55E;
+    }
+
+    /* Login modal */
+    .modal-overlay {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+    }
+    .modal-enter { animation: modalEnter 0.2s ease-out; }
+    @keyframes modalEnter {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* Chrome extension promo */
+    .promo-bg {
+      background:
+        radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.08), transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(6, 182, 212, 0.06), transparent 50%);
+    }
+    .promo-shimmer {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+      animation: shimmer 2.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+  </style>
+</head>
+<body class="bg-bg-base text-slate-100 min-h-screen font-sans antialiased">
+  <!-- Background grid -->
+  <div class="fixed inset-0 grid-bg pointer-events-none"></div>
+
+  <!-- Top bar -->
+  <header class="relative z-10 border-b border-white/5 bg-bg-base/95 sm:bg-bg-base/80 sm:backdrop-blur-xl sticky top-0">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-accent sm:bg-gradient-to-br sm:from-accent sm:to-cyan-500 flex items-center justify-center shrink-0 shadow-sm shadow-accent/30 sm:shadow-none">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 sm:w-5 sm:h-5 text-bg-base" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <div class="font-display font-bold text-base sm:text-lg leading-none truncate">Stackly</div>
+          <div class="hidden sm:block text-xs text-slate-500 font-mono">v1.1.0 · detector</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 sm:gap-3 text-xs font-mono">
+        <!-- Quota wrapper — JS toggles `hidden` here; children handle sm+ vs mobile display -->
+        <div id="quota-container" class="hidden">
+          <!-- Desktop: full quota widget with progress bar -->
+          <div id="quota-widget" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 cursor-default" title="Monthly scan quota">
+            <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7"></path>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <div class="flex items-center gap-1.5">
+              <span id="quota-used" class="text-slate-200 font-medium tabular-nums">0</span>
+              <span class="text-slate-600">/</span>
+              <span id="quota-limit" class="text-slate-400 tabular-nums">0</span>
+            </div>
+            <div class="w-12 h-1 bg-white/10 rounded-full overflow-hidden">
+              <div id="quota-bar" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+          <!-- Mobile: icon + count only, no progress bar -->
+          <div id="quota-mobile" class="flex sm:hidden items-center gap-1.5 px-2 py-1.5 rounded-full bg-white/5 border border-white/10 cursor-default" title="Monthly scan quota">
+            <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7"></path>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span id="quota-mobile-text" class="text-[10px] tabular-nums text-slate-300"></span>
+          </div>
+        </div>
+        <div id="status-indicator" class="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+          <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></div>
+          <span class="hidden sm:inline text-emerald-400">ready</span>
+        </div>
+        <button id="open-extension-btn" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors cursor-pointer">
+          <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+          <span>Get Extension</span>
+        </button>
+        <button id="open-auth-btn" class="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-full bg-accent/10 hover:bg-accent/20 border border-accent/30 text-accent transition-colors cursor-pointer" title="Sign in">
+          <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span id="auth-btn-label" class="hidden sm:inline">Sign in</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="relative z-10 max-w-6xl mx-auto px-6 py-12 lg:py-20">
+
+    <!-- Hero -->
+    <section class="text-center mb-16 animate-fade-in">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-slate-400 mb-6">
+        <span class="w-1 h-1 rounded-full bg-accent"></span>
+        <span>detect any stack · 133 technologies · 23 categories</span>
+      </div>
+      <h1 class="font-display font-bold text-5xl lg:text-7xl mb-5 tracking-tight">
+        What is <span class="gradient-text">built with</span>?
+      </h1>
+      <p class="text-slate-400 text-lg max-w-xl mx-auto leading-relaxed">
+        Enter any URL and uncover the technologies powering it — from CMS to CDN, analytics to frameworks.
+      </p>
+    </section>
+
+    <!-- Input -->
+    <section class="max-w-2xl mx-auto mb-12 animate-slide-up">
+      <form id="scan-form" class="relative">
+        <div class="glow-ring rounded-2xl bg-bg-surface/80 backdrop-blur p-1.5 flex items-center gap-2 transition-all duration-300 focus-within:shadow-[0_0_0_1px_rgba(34,197,94,0.4),0_8px_40px_-8px_rgba(34,197,94,0.5)]">
+          <div class="pl-3 text-slate-500">
+            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </div>
+          <input
+            id="url-input"
+            type="text"
+            placeholder="https://example.com"
+            autocomplete="off"
+            spellcheck="false"
+            class="flex-1 bg-transparent border-none outline-none py-4 text-slate-100 placeholder-slate-600 font-mono text-sm"
+            required
+          >
+          <button
+            id="scan-btn"
+            type="submit"
+            class="bg-accent hover:bg-accent-dim text-bg-base font-display font-bold px-6 py-3 rounded-xl transition-all duration-200 flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span id="scan-btn-label">Scan</span>
+            <svg id="scan-btn-icon" viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+            <svg id="scan-btn-spinner" viewBox="0 0 24 24" class="w-4 h-4 animate-spin hidden" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="12" cy="12" r="10" opacity="0.25"></circle>
+              <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+            </svg>
+          </button>
+        </div>
+        <!-- Quick examples -->
+        <div class="mt-4 flex items-center justify-center gap-2 text-xs text-slate-500 flex-wrap">
+          <span>Try:</span>
+          <button type="button" data-url="https://react.dev" class="example-btn px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors font-mono cursor-pointer">react.dev</button>
+          <button type="button" data-url="https://nextjs.org" class="example-btn px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors font-mono cursor-pointer">nextjs.org</button>
+          <button type="button" data-url="https://stripe.com" class="example-btn px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors font-mono cursor-pointer">stripe.com</button>
+          <button type="button" data-url="https://nuxt.com" class="example-btn px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors font-mono cursor-pointer">nuxt.com</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Chrome Extension promo (hidden on mobile — extension is desktop-only) -->
+    <section class="hidden md:block max-w-4xl mx-auto mb-16">
+      <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-bg-surface/80 via-bg-surface/60 to-bg-surface/80 promo-bg">
+        <div class="absolute inset-0 promo-shimmer pointer-events-none"></div>
+        <div class="relative grid md:grid-cols-2 gap-6 p-8 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs font-mono text-accent mb-4">
+              <span class="w-1 h-1 rounded-full bg-accent animate-pulse"></span>
+              <span>Chrome Extension</span>
+            </div>
+            <h2 class="font-display font-bold text-2xl lg:text-3xl mb-3 tracking-tight">
+              One-click stack detection
+            </h2>
+            <p class="text-slate-400 text-sm leading-relaxed mb-5">
+              Scan any website you visit. Hit the toolbar icon and instantly see what tech stack powers it — CMS, framework, hosting, analytics, all in a side panel.
+            </p>
+            <div class="flex items-center gap-3 flex-wrap">
+              <a id="install-extension-btn" href="/extension/stackly-chrome-extension.zip" download class="inline-flex items-center gap-2 bg-accent hover:bg-accent-dim text-bg-base font-display font-bold px-5 py-2.5 rounded-xl transition-colors cursor-pointer">
+                <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Download .zip</span>
+              </a>
+              <button id="open-install-help-btn" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium transition-colors cursor-pointer">
+                <span>Install guide</span>
+                <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+            <div class="mt-5 flex items-center gap-4 text-xs font-mono text-slate-500">
+              <div class="flex items-center gap-1.5">
+                <svg viewBox="0 0 24 24" class="w-3 h-3 text-accent" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Manifest V3</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg viewBox="0 0 24 24" class="w-3 h-3 text-accent" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Zero config</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg viewBox="0 0 24 24" class="w-3 h-3 text-accent" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Local-first</span>
+              </div>
+            </div>
+          </div>
+          <div class="hidden md:block">
+            <!-- Extension mockup -->
+            <div class="relative">
+              <div class="bg-bg-base rounded-xl border border-white/10 p-4 shadow-2xl">
+                <div class="flex items-center gap-2 mb-3">
+                  <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-cyan-500 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-4 h-4 text-bg-base" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="16 18 22 12 16 6"></polyline>
+                      <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                  </div>
+                  <div class="font-display font-semibold text-sm">Stackly</div>
+                  <div class="ml-auto text-[10px] font-mono text-slate-500">react.dev</div>
+                </div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/[0.03]">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" class="tech-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" alt=""><span class="w-[18px] h-[18px] rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-bold items-center justify-center hidden">R</span>
+                    <span class="text-xs text-slate-200 font-mono">React</span>
+                    <span class="ml-auto text-[10px] text-slate-500 font-mono">framework</span>
+                  </div>
+                  <div class="flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/[0.03]">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" class="tech-icon" onerror="this.style.display='none'" alt="">
+                    <span class="text-xs text-slate-200 font-mono">Next.js</span>
+                    <span class="ml-auto text-[10px] text-slate-500 font-mono">framework</span>
+                  </div>
+                  <div class="flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/[0.03]">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg" class="tech-icon" onerror="this.style.display='none'" alt="">
+                    <span class="text-xs text-slate-200 font-mono">Vercel</span>
+                    <span class="ml-auto text-[10px] text-slate-500 font-mono">hosting</span>
+                  </div>
+                  <div class="flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/[0.03]">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg" class="tech-icon" onerror="this.style.display='none'" alt="">
+                    <span class="text-xs text-slate-200 font-mono">Google Analytics</span>
+                    <span class="ml-auto text-[10px] text-slate-500 font-mono">analytics</span>
+                  </div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                  <span>4 detected</span>
+                  <span class="text-accent">Open in Stackly →</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section id="results-section" class="hidden max-w-4xl mx-auto animate-fade-in">
+      <div class="bg-bg-surface/60 backdrop-blur border border-white/10 rounded-2xl p-4 sm:p-6 mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-2">
+              <span id="result-status" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-medium"></span>
+              <span id="result-duration" class="text-xs font-mono text-slate-500"></span>
+            </div>
+            <div class="font-mono text-lg text-slate-100 truncate flex items-center gap-2">
+              <svg viewBox="0 0 24 24" class="w-4 h-4 text-slate-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+              <span id="result-url" class="truncate"></span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button id="download-html-btn" class="flex items-center justify-center gap-1.5 w-9 h-8 sm:w-auto sm:h-auto sm:px-3 sm:py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-mono text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" title="Download HTML report" aria-label="Download HTML report">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              <span class="hidden sm:inline">HTML</span>
+            </button>
+            <button id="download-pdf-btn" class="flex items-center justify-center gap-1.5 w-9 h-8 sm:w-auto sm:h-auto sm:px-3 sm:py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-mono text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" title="Download PDF report" aria-label="Download PDF report">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <path d="M9 13h6M9 17h4"></path>
+              </svg>
+              <span class="hidden sm:inline">PDF</span>
+            </button>
+            <button id="copy-json-btn" class="flex items-center justify-center gap-1.5 w-9 h-8 sm:w-auto sm:h-auto sm:px-3 sm:py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-mono text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" title="Copy results JSON" aria-label="Copy results JSON">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span class="hidden sm:inline">JSON</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="empty-state" class="hidden text-center py-16">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 mb-4">
+          <svg viewBox="0 0 24 24" class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <h3 class="font-display font-semibold text-xl text-slate-300 mb-2">No technologies detected</h3>
+        <p class="text-slate-500 text-sm">This site uses uncommon tools or blocks automated detection.</p>
+      </div>
+
+      <div id="error-state" class="hidden text-center py-16">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-red-500/10 mb-4">
+          <svg viewBox="0 0 24 24" class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <h3 class="font-display font-semibold text-xl text-red-300 mb-2">Scan failed</h3>
+        <p id="error-message" class="text-slate-500 text-sm font-mono"></p>
+      </div>
+
+      <div id="loading-state" class="hidden text-center py-16">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-accent/10 mb-4">
+          <svg viewBox="0 0 24 24" class="w-8 h-8 text-accent animate-spin" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" opacity="0.25"></circle>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+          </svg>
+        </div>
+        <h3 class="font-display font-semibold text-xl text-slate-200 mb-2">Scanning<span class="inline-block"><span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span></span></h3>
+        <p class="text-slate-500 text-sm font-mono" id="loading-target"></p>
+      </div>
+
+      <div id="summary-banner" class="hidden mb-6"></div>
+      <div id="marketing-highlight" class="hidden mb-6"></div>
+      <div id="categories-container" class="space-y-4"></div>
+
+      <div id="implied-container" class="hidden mt-6 bg-bg-surface/40 border border-white/5 rounded-2xl p-5">
+        <div class="flex items-center gap-2 mb-3">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          </svg>
+          <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400">Implied technologies</h3>
+        </div>
+        <div id="implied-list" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <div id="emails-container" class="hidden mt-6 bg-bg-surface/40 border border-white/5 rounded-2xl p-5">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="m22 7-10 6L2 7"></path>
+            </svg>
+            <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400">Contact emails</h3>
+            <span id="emails-count" class="text-xs font-mono text-slate-500"></span>
+          </div>
+        </div>
+        <div id="emails-list" class="flex flex-wrap gap-2"></div>
+      </div>
+    </section>
+
+    <!-- Recent scans -->
+    <section id="recent-section" class="max-w-4xl mx-auto mt-16 hidden">
+      <div class="flex items-center gap-2 mb-4">
+        <svg viewBox="0 0 24 24" class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <h2 class="text-xs font-mono uppercase tracking-wider text-slate-500">Recent scans</h2>
+      </div>
+      <div id="recent-list" class="space-y-2"></div>
+    </section>
+
+    <!-- Schedules section — only visible when auth is enabled -->
+    <section id="schedules-section" class="hidden max-w-4xl mx-auto mt-16">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <h2 class="text-xs font-mono uppercase tracking-wider text-slate-500">Scheduled re-scans</h2>
+          <span id="schedules-count" class="text-xs font-mono text-slate-600"></span>
+        </div>
+        <button id="new-schedule-btn" class="px-3 py-1.5 rounded-lg bg-accent/10 hover:bg-accent/20 border border-accent/30 text-accent text-xs font-mono font-medium transition-colors cursor-pointer flex items-center gap-1.5">
+          <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          New schedule
+        </button>
+      </div>
+      <div id="schedules-list" class="space-y-2"></div>
+      <div id="schedules-empty" class="hidden text-center py-8 text-sm text-slate-500 font-mono">
+        No schedules yet. Click <span class="text-accent">New schedule</span> to monitor a URL.
+      </div>
+      <div id="webhook-log-section" class="hidden mt-8">
+        <div class="flex items-center gap-2 mb-3">
+          <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          <h3 class="text-xs font-mono uppercase tracking-wider text-slate-500">Webhook log</h3>
+        </div>
+        <div id="webhook-log-list" class="space-y-1"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- New Schedule Modal -->
+  <div id="schedule-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
+    <div class="bg-bg-surface border border-white/10 rounded-2xl w-full max-w-md modal-enter">
+      <div class="flex items-center justify-between p-5 border-b border-white/5">
+        <h3 class="font-display font-bold text-lg">New schedule</h3>
+        <button id="close-schedule-btn" class="text-slate-500 hover:text-slate-300 transition-colors cursor-pointer">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form id="schedule-form" class="p-5 space-y-4">
+        <div>
+          <label class="block text-xs font-mono uppercase tracking-wider text-slate-500 mb-1.5">URL</label>
+          <input id="schedule-url" type="url" required placeholder="https://example.com" class="w-full px-3 py-2 bg-bg-base border border-white/10 rounded-lg font-mono text-sm focus:outline-none focus:border-accent transition-colors">
+        </div>
+        <div>
+          <label class="block text-xs font-mono uppercase tracking-wider text-slate-500 mb-1.5">Interval</label>
+          <select id="schedule-interval" class="w-full px-3 py-2 bg-bg-base border border-white/10 rounded-lg font-mono text-sm focus:outline-none focus:border-accent transition-colors">
+            <option value="hourly">Hourly (every 1h)</option>
+            <option value="daily" selected>Daily (every 24h)</option>
+            <option value="weekly">Weekly (every 7d)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-mono uppercase tracking-wider text-slate-500 mb-1.5">
+            Webhook URL <span class="text-slate-600 normal-case">(optional)</span>
+          </label>
+          <input id="schedule-webhook-url" type="url" placeholder="https://your-app.com/webhook" class="w-full px-3 py-2 bg-bg-base border border-white/10 rounded-lg font-mono text-sm focus:outline-none focus:border-accent transition-colors">
+        </div>
+        <div>
+          <label class="block text-xs font-mono uppercase tracking-wider text-slate-500 mb-1.5">
+            Webhook secret <span class="text-slate-600 normal-case">(for HMAC signature)</span>
+          </label>
+          <input id="schedule-webhook-secret" type="text" placeholder="random string" class="w-full px-3 py-2 bg-bg-base border border-white/10 rounded-lg font-mono text-sm focus:outline-none focus:border-accent transition-colors">
+        </div>
+        <div id="schedule-error" class="hidden text-sm text-red-400 font-mono"></div>
+        <div class="flex gap-3 pt-2">
+          <button type="button" id="cancel-schedule-btn" class="flex-1 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-sm font-mono transition-colors cursor-pointer">Cancel</button>
+          <button type="submit" id="submit-schedule-btn" class="flex-1 bg-accent hover:bg-accent-dim text-bg-base font-display font-bold py-2.5 rounded-lg transition-colors cursor-pointer">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Auth Modal -->
+  <div id="auth-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
+    <div class="bg-bg-surface border border-white/10 rounded-2xl w-full max-w-md modal-enter">
+      <div class="flex items-center justify-between p-5 border-b border-white/5">
+        <div>
+          <h3 class="font-display font-bold text-lg">Sign in to Stackly</h3>
+          <p class="text-xs text-slate-500 font-mono mt-1">Authenticate to use the API</p>
+        </div>
+        <button id="close-auth-btn" class="text-slate-500 hover:text-slate-300 transition-colors cursor-pointer">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex border-b border-white/5 px-5">
+        <button data-tab="basic" class="tab-btn active flex-1 py-3 text-sm font-mono text-center cursor-pointer transition-colors">Username & Password</button>
+        <button data-tab="apikey" class="tab-btn flex-1 py-3 text-sm font-mono text-center cursor-pointer transition-colors text-slate-500">API Key</button>
+        <button data-tab="jwt" class="tab-btn flex-1 py-3 text-sm font-mono text-center cursor-pointer transition-colors text-slate-500">JWT</button>
+      </div>
+
+      <form id="auth-form" class="p-5 space-y-4">
+        <!-- Basic Auth panel -->
+        <div data-panel="basic" class="space-y-3">
+          <div>
+            <label class="block text-xs font-mono text-slate-400 mb-1.5">Username</label>
+            <input id="basic-user-input" type="text" placeholder="andika" class="w-full bg-bg-base/60 border border-white/10 focus:border-accent/50 rounded-lg px-3 py-2.5 text-sm font-mono text-slate-100 placeholder-slate-600 outline-none transition-colors">
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-slate-400 mb-1.5">Password</label>
+            <input id="basic-pass-input" type="password" placeholder="••••••••" class="w-full bg-bg-base/60 border border-white/10 focus:border-accent/50 rounded-lg px-3 py-2.5 text-sm font-mono text-slate-100 placeholder-slate-600 outline-none transition-colors">
+          </div>
+        </div>
+
+        <!-- API Key panel -->
+        <div data-panel="apikey" class="hidden space-y-3">
+          <div>
+            <label class="block text-xs font-mono text-slate-400 mb-1.5">X-API-Key header</label>
+            <input id="apikey-input" type="text" placeholder="sk_live_..." class="w-full bg-bg-base/60 border border-white/10 focus:border-accent/50 rounded-lg px-3 py-2.5 text-sm font-mono text-slate-100 placeholder-slate-600 outline-none transition-colors">
+            <p class="text-xs text-slate-500 mt-1.5">Or paste into the Authorization header as <code class="text-slate-400">Bearer &lt;key&gt;</code></p>
+          </div>
+        </div>
+
+        <!-- JWT panel -->
+        <div data-panel="jwt" class="hidden space-y-3">
+          <div>
+            <label class="block text-xs font-mono text-slate-400 mb-1.5">JWT (HS256)</label>
+            <textarea id="jwt-input" rows="3" placeholder="eyJhbGciOiJIUzI1NiIs..." class="w-full bg-bg-base/60 border border-white/10 focus:border-accent/50 rounded-lg px-3 py-2.5 text-xs font-mono text-slate-100 placeholder-slate-600 outline-none transition-colors resize-none"></textarea>
+            <p class="text-xs text-slate-500 mt-1.5">Generate with the shared secret from your server config</p>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div id="auth-status" class="hidden text-xs font-mono rounded-lg px-3 py-2"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-2 pt-2">
+          <button type="submit" id="auth-submit-btn" class="flex-1 bg-accent hover:bg-accent-dim text-bg-base font-display font-bold py-2.5 rounded-lg transition-colors cursor-pointer">
+            Verify
+          </button>
+          <button type="button" id="auth-clear-btn" class="px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-sm font-mono text-slate-400 transition-colors cursor-pointer">
+            Clear
+          </button>
+        </div>
+
+        <!-- Help -->
+        <details class="text-xs text-slate-500 font-mono">
+          <summary class="cursor-pointer hover:text-slate-400 transition-colors py-1">How do I get credentials?</summary>
+          <div class="mt-2 space-y-2 pl-3 border-l border-white/10">
+            <p>Server admin sets these via env vars:</p>
+            <pre class="bg-bg-base/60 rounded p-2 overflow-x-auto"><code>STACKLY_API_KEYS=sk_live_abc,sk_live_xyz:pro
+STACKLY_BASIC_USERS=alice:wonderland
+STACKLY_JWT_SECRET=your-256-bit-secret</code></pre>
+          </div>
+        </details>
+      </form>
+    </div>
+  </div>
+
+  <!-- Install Guide Modal -->
+  <div id="install-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
+    <div class="bg-bg-surface border border-white/10 rounded-2xl w-full max-w-lg modal-enter">
+      <div class="flex items-center justify-between p-5 border-b border-white/5">
+        <div>
+          <h3 class="font-display font-bold text-lg">Install Chrome Extension</h3>
+          <p class="text-xs text-slate-500 font-mono mt-1">Manifest V3 · 5 steps</p>
+        </div>
+        <button id="close-install-btn" class="text-slate-500 hover:text-slate-300 transition-colors cursor-pointer">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="p-5 space-y-3 text-sm">
+        <ol class="space-y-3">
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs font-mono font-bold flex items-center justify-center">1</span>
+            <div>
+              <div class="font-medium">Download the .zip</div>
+              <div class="text-xs text-slate-500 mt-0.5 font-mono">Click the green button below to save <code class="text-slate-400">stackly-chrome-extension.zip</code></div>
+            </div>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs font-mono font-bold flex items-center justify-center">2</span>
+            <div>
+              <div class="font-medium">Unzip to a permanent folder</div>
+              <div class="text-xs text-slate-500 mt-0.5 font-mono">e.g. <code class="text-slate-400">~/tools/stackly/</code> — don't move it after install</div>
+            </div>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs font-mono font-bold flex items-center justify-center">3</span>
+            <div>
+              <div class="font-medium">Open chrome://extensions</div>
+              <div class="text-xs text-slate-500 mt-0.5 font-mono">Toggle <strong class="text-slate-300">Developer mode</strong> in the top-right corner</div>
+            </div>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs font-mono font-bold flex items-center justify-center">4</span>
+            <div>
+              <div class="font-medium">Click "Load unpacked"</div>
+              <div class="text-xs text-slate-500 mt-0.5 font-mono">Select the unzipped folder (the one containing <code class="text-slate-400">manifest.json</code>)</div>
+            </div>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs font-mono font-bold flex items-center justify-center">5</span>
+            <div>
+              <div class="font-medium">Pin and use</div>
+              <div class="text-xs text-slate-500 mt-0.5 font-mono">Click the puzzle icon → pin Stackly → click the S badge on any site</div>
+            </div>
+          </li>
+        </ol>
+        <div class="pt-3 border-t border-white/5 flex items-center gap-2">
+          <a id="install-modal-btn" href="/extension/stackly-chrome-extension.zip" download class="flex-1 inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-dim text-bg-base font-display font-bold px-4 py-2.5 rounded-xl transition-colors cursor-pointer">
+            <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Download</span>
+          </a>
+          <a href="/extension/README.md" target="_blank" class="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-sm font-medium transition-colors cursor-pointer">
+            Full README
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-white/5 mt-20">
+    <div class="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between text-xs font-mono text-slate-600 flex-wrap gap-4">
+      <div>Stackly · Tech stack detector · Go + chromedp</div>
+      <div class="flex items-center gap-4">
+        <span id="queue-stats">workers: 2</span>
+        <span>·</span>
+        <a href="/api/health" class="hover:text-slate-400 transition-colors cursor-pointer">api</a>
+        <span>·</span>
+        <a href="/api/docs/ui" class="hover:text-slate-400 transition-colors cursor-pointer">docs</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
