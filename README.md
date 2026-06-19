@@ -1,5 +1,11 @@
 # Stackly
 
+[![CI](https://github.com/dikdotcom/stackly/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/dikdotcom/stackly/actions/workflows/ci.yml)
+[![GitHub Pages](https://github.com/dikdotcom/stackly/actions/workflows/pages.yml/badge.svg)](https://github.com/dikdotcom/stackly/actions/workflows/pages.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-22C55E.svg)](https://github.com/dikdotcom/stackly/blob/main/LICENSE)
+[![Go Version](https://img.shields.io/badge/Go-1.22%20%7C%201.23-00ADD8?logo=go&logoColor=white)](https://go.dev/)
+[![Private](https://img.shields.io/badge/repo-private-lightgrey)](https://github.com/dikdotcom/stackly)
+
 Multi-tenant tech stack detection platform built in Go — headless browser scanning with its own fingerprint database, top-level category grouping, and contact email extraction.
 
 > Built for production deployments where fingerprint detection needs to be auditable, extensible, and license-clean. The dataset is hand-written and shipped as plain JSON that ops can review.
@@ -403,6 +409,13 @@ $EDITOR data/fingerprints.json  # add new entry, restart server
 # Regenerate Chrome extension zip
 cd extension && zip -r ../web/extension/stackly-chrome-extension.zip . && cd ..
 ```
+
+## Project Links
+
+- 🌐 **Landing page**: <https://dikdotcom.github.io/stackly/>
+- 📦 **Repository**: <https://github.com/dikdotcom/stackly>
+- 📖 **API docs**: [`docs/openapi.yaml`](docs/openapi.yaml)
+- 🐛 **Issues**: <https://github.com/dikdotcom/stackly/issues>
 
 ## License
 
