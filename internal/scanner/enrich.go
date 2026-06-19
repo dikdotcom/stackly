@@ -149,21 +149,26 @@ func QueryDNS(ctx context.Context, domain string) *DNSInfo {
 	errs := make(map[string]error, len(types))
 
 	// Fetch in parallel
-	done := make(chan struct{}, len(types))
+	type result struct {
+		typ string
+		ans []dohAnswer
+		err error
+	}
+	resCh := make(chan result, len(types))
 	for _, t := range types {
 		t := t
 		go func() {
 			ans, err := dohQuery(ctx, domain, t)
-			if err != nil {
-				errs[t] = err
-			} else {
-				results[t] = ans
-			}
-			done <- struct{}{}
+			resCh <- result{typ: t, ans: ans, err: err}
 		}()
 	}
 	for i := 0; i < len(types); i++ {
-		<-done
+		r := <-resCh
+		if r.err != nil {
+			errs[r.typ] = r.err
+		} else {
+			results[r.typ] = r.ans
+		}
 	}
 
 	// A records
