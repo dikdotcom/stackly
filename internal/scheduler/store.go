@@ -33,20 +33,20 @@ func IntervalDur(s string) time.Duration {
 
 // Schedule is a single re-scan configuration.
 type Schedule struct {
-	ID           string    `json:"id"`
-	URL          string    `json:"url"`
-	Interval     string    `json:"interval"` // hourly | daily | weekly
-	Owner        string    `json:"owner"`    // user ID for multi-tenant scoping
-	Enabled      bool      `json:"enabled"`
-	WebhookURL   string    `json:"webhook_url,omitempty"`
-	WebhookSecret string   `json:"webhook_secret,omitempty"` // HMAC secret (kept on server, never returned in GET)
-	HasSecret    bool      `json:"has_secret"`              // true when WebhookSecret is set (exposed via API; value redacted)
-	LastRun      time.Time `json:"last_run,omitempty"`
-	LastStatus   string    `json:"last_status,omitempty"` // success | failed | ""
-	LastError    string    `json:"last_error,omitempty"`
-	NextRun      time.Time `json:"next_run"`
-	RunCount     int       `json:"run_count"`
-	CreatedAt    time.Time `json:"created_at"`
+	ID            string    `json:"id"`
+	URL           string    `json:"url"`
+	Interval      string    `json:"interval"` // hourly | daily | weekly
+	Owner         string    `json:"owner"`    // user ID for multi-tenant scoping
+	Enabled       bool      `json:"enabled"`
+	WebhookURL    string    `json:"webhook_url,omitempty"`
+	WebhookSecret string    `json:"webhook_secret,omitempty"` // HMAC secret (kept on server, never returned in GET)
+	HasSecret     bool      `json:"has_secret"`               // true when WebhookSecret is set (exposed via API; value redacted)
+	LastRun       time.Time `json:"last_run,omitempty"`
+	LastStatus    string    `json:"last_status,omitempty"` // success | failed | ""
+	LastError     string    `json:"last_error,omitempty"`
+	NextRun       time.Time `json:"next_run"`
+	RunCount      int       `json:"run_count"`
+	CreatedAt     time.Time `json:"created_at"`
 }
 
 // WebhookDelivery records one delivery attempt. We persist only the last
@@ -98,8 +98,8 @@ func (s *store) load() error {
 	}
 
 	var file struct {
-		Schedules []*Schedule         `json:"schedules"`
-		Log       []*WebhookDelivery  `json:"log"`
+		Schedules []*Schedule        `json:"schedules"`
+		Log       []*WebhookDelivery `json:"log"`
 	}
 	if err := json.Unmarshal(data, &file); err != nil {
 		return err
@@ -119,8 +119,8 @@ func (s *store) save() error {
 	defer s.mu.RUnlock()
 
 	file := struct {
-		Schedules []*Schedule         `json:"schedules"`
-		Log       []*WebhookDelivery  `json:"log"`
+		Schedules []*Schedule        `json:"schedules"`
+		Log       []*WebhookDelivery `json:"log"`
 	}{
 		Schedules: make([]*Schedule, 0, len(s.schedules)),
 		Log:       s.log,

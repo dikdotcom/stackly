@@ -2,26 +2,26 @@
 //
 // Exposed metrics:
 //
-//   # HTTP
-//   - stackly_http_requests_total{method,path,status}
-//   - stackly_http_request_duration_seconds{method,path}
-//   - stackly_http_requests_in_flight
+//	# HTTP
+//	- stackly_http_requests_total{method,path,status}
+//	- stackly_http_request_duration_seconds{method,path}
+//	- stackly_http_requests_in_flight
 //
-//   # Scanner
-//   - stackly_scans_total{status,cache}
-//   - stackly_scan_duration_seconds
-//   - stackly_scan_detections_total{category}
+//	# Scanner
+//	- stackly_scans_total{status,cache}
+//	- stackly_scan_duration_seconds
+//	- stackly_scan_detections_total{category}
 //
-//   # Queue + Cache
-//   - stackly_queue_depth
-//   - stackly_cache_size
-//   - stackly_cache_hits_total
-//   - stackly_cache_misses_total
+//	# Queue + Cache
+//	- stackly_queue_depth
+//	- stackly_cache_size
+//	- stackly_cache_hits_total
+//	- stackly_cache_misses_total
 //
-//   # Auth
-//   - stackly_auth_requests_total{tier,auth_type,result}
-//   - stackly_auth_active_users
-//   - stackly_auth_rate_limited_total{tier}
+//	# Auth
+//	- stackly_auth_requests_total{tier,auth_type,result}
+//	- stackly_auth_active_users
+//	- stackly_auth_rate_limited_total{tier}
 //
 // Plus default Go runtime + process metrics via promhttp.Handler().
 package metrics

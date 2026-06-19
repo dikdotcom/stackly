@@ -11,9 +11,9 @@ import (
 type DetectionRule struct {
 	Pattern    string `json:"pattern"`
 	Match      string `json:"match,omitempty"`      // contains (default), regex, exact, exists
-	Confidence int    `json:"confidence,omitempty"`  // default 100
-	Name       string `json:"name,omitempty"`        // for meta: tag name
-	Header     string `json:"header,omitempty"`      // for headers: header name
+	Confidence int    `json:"confidence,omitempty"` // default 100
+	Name       string `json:"name,omitempty"`       // for meta: tag name
+	Header     string `json:"header,omitempty"`     // for headers: header name
 }
 
 // Detectors holds all detection methods
@@ -30,14 +30,14 @@ type Detectors struct {
 
 // Technology represents a single technology fingerprint
 type Technology struct {
-	Slug       string    `json:"slug"`
-	Name       string    `json:"name"`
-	Website    string    `json:"website,omitempty"`
-	Category   string    `json:"category"`
-	Icon       string    `json:"icon,omitempty"`
-	Detectors  Detectors `json:"detectors"`
-	Implies    []string  `json:"implies,omitempty"`
-	Excludes   []string  `json:"excludes,omitempty"`
+	Slug      string    `json:"slug"`
+	Name      string    `json:"name"`
+	Website   string    `json:"website,omitempty"`
+	Category  string    `json:"category"`
+	Icon      string    `json:"icon,omitempty"`
+	Detectors Detectors `json:"detectors"`
+	Implies   []string  `json:"implies,omitempty"`
+	Excludes  []string  `json:"excludes,omitempty"`
 }
 
 // Database is the complete fingerprint database

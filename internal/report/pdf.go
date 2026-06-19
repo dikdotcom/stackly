@@ -42,7 +42,7 @@ func RenderPDF(htmlContent string) ([]byte, error) {
 			var perr error
 			buf, _, perr = page.PrintToPDF().
 				WithPrintBackground(true).
-				WithPaperWidth(8.5).   // Letter
+				WithPaperWidth(8.5). // Letter
 				WithPaperHeight(11).
 				WithMarginTop(0.4).
 				WithMarginBottom(0.4).

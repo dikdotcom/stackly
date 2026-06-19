@@ -257,8 +257,8 @@ func (s *Server) handleScheduleRun(w http.ResponseWriter, r *http.Request, sch *
 		s.NextRun = time.Now()
 	})
 	writeJSON(w, http.StatusOK, map[string]interface{}{
-		"status":  "queued",
-		"message": "schedule will run on next scheduler tick (within 30s)",
+		"status":      "queued",
+		"message":     "schedule will run on next scheduler tick (within 30s)",
 		"schedule_id": sch.ID,
 	})
 }

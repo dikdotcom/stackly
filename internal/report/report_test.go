@@ -69,8 +69,8 @@ func TestRender_EnrichmentCards(t *testing.T) {
 			NS:          []string{"ns1.example.com"},
 		},
 		SSL: &scanner.SSLInfo{
-			Issuer:     "Let's Encrypt",
-			TLSVersion: "TLS 1.3",
+			Issuer:          "Let's Encrypt",
+			TLSVersion:      "TLS 1.3",
 			DaysUntilExpiry: 45,
 		},
 		Perf: &scanner.PerfMetrics{
@@ -90,4 +90,9 @@ func TestRender_EnrichmentCards(t *testing.T) {
 	}
 }
 
-func min(a, b int) int { if a < b { return a }; return b }
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}

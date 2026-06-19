@@ -26,17 +26,17 @@ const (
 
 // Job represents a scan job
 type Job struct {
-	ID         string                  `json:"id"`
-	URL        string                  `json:"url"`
-	Status     JobStatus               `json:"status"`
-	CreatedAt  time.Time               `json:"created_at"`
-	StartedAt  *time.Time              `json:"started_at,omitempty"`
-	FinishedAt *time.Time              `json:"finished_at,omitempty"`
-	Duration   string                  `json:"duration,omitempty"`
-	Error      string                  `json:"error,omitempty"`
-	Result     *scanner.ScanResult     `json:"result,omitempty"`
-	FromCache  bool                    `json:"from_cache,omitempty"`
-	UA         string                  `json:"user_agent,omitempty"`
+	ID         string              `json:"id"`
+	URL        string              `json:"url"`
+	Status     JobStatus           `json:"status"`
+	CreatedAt  time.Time           `json:"created_at"`
+	StartedAt  *time.Time          `json:"started_at,omitempty"`
+	FinishedAt *time.Time          `json:"finished_at,omitempty"`
+	Duration   string              `json:"duration,omitempty"`
+	Error      string              `json:"error,omitempty"`
+	Result     *scanner.ScanResult `json:"result,omitempty"`
+	FromCache  bool                `json:"from_cache,omitempty"`
+	UA         string              `json:"user_agent,omitempty"`
 }
 
 // JobQueue is an in-memory job queue with worker pool
@@ -125,10 +125,10 @@ func (q *JobQueue) Enqueue(url string) (*Job, error) {
 	metrics.QueueDepth.Set(float64(len(q.pending)))
 
 	q.hub.Publish(id, ws.Event{
-		Type:    "progress",
-		Status:  string(StatusPending),
+		Type:     "progress",
+		Status:   string(StatusPending),
 		Progress: 0,
-		Message: "Queued for scan",
+		Message:  "Queued for scan",
 	})
 
 	return job, nil
@@ -227,10 +227,10 @@ func (q *JobQueue) processJob(job *Job) {
 	q.mu.Unlock()
 
 	q.hub.Publish(job.ID, ws.Event{
-		Type:    "progress",
-		Status:  string(StatusRunning),
+		Type:     "progress",
+		Status:   string(StatusRunning),
 		Progress: 10,
-		Message: "Worker picked up job",
+		Message:  "Worker picked up job",
 	})
 
 	// Check cache first
@@ -372,7 +372,7 @@ func (q *JobQueue) cleanupLocked() {
 		var oldest *Job
 		var oldestID string
 		for id, job := range q.jobs {
-			if (job.Status == StatusCompleted || job.Status == StatusFailed) {
+			if job.Status == StatusCompleted || job.Status == StatusFailed {
 				if oldest == nil || job.CreatedAt.Before(oldest.CreatedAt) {
 					oldest = job
 					oldestID = id

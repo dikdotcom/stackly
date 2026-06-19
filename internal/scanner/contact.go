@@ -55,8 +55,8 @@ func FindContactPages(html, baseURL string) []string {
 	matches := linkRe.FindAllStringSubmatch(html, -1)
 
 	type candidate struct {
-		href   string
-		score  int
+		href  string
+		score int
 	}
 	seen := make(map[string]bool)
 	var candidates []candidate

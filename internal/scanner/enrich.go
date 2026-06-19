@@ -24,13 +24,13 @@ var dohEndpoints = []string{
 type DNSInfo struct {
 	A             []string `json:"a,omitempty"`
 	AAAA          []string `json:"aaaa,omitempty"`
-	MX            []DNSMX   `json:"mx,omitempty"`
-	NS            []string  `json:"ns,omitempty"`
-	TXT           []string  `json:"txt,omitempty"`
-	CNAME         string    `json:"cname,omitempty"`
-	EmailProvider string    `json:"email_provider,omitempty"` // derived: Google Workspace, Zoho, Outlook, etc.
-	DNSProvider   string    `json:"dns_provider,omitempty"`   // derived: Cloudflare, Route53, etc.
-	Error         string    `json:"error,omitempty"`
+	MX            []DNSMX  `json:"mx,omitempty"`
+	NS            []string `json:"ns,omitempty"`
+	TXT           []string `json:"txt,omitempty"`
+	CNAME         string   `json:"cname,omitempty"`
+	EmailProvider string   `json:"email_provider,omitempty"` // derived: Google Workspace, Zoho, Outlook, etc.
+	DNSProvider   string   `json:"dns_provider,omitempty"`   // derived: Cloudflare, Route53, etc.
+	Error         string   `json:"error,omitempty"`
 }
 
 // DNSMX is a single MX record.
@@ -41,16 +41,16 @@ type DNSMX struct {
 
 // WHOISInfo captures RDAP registration data.
 type WHOISInfo struct {
-	Registrar      string   `json:"registrar,omitempty"`
-	CreatedDate    string   `json:"created_date,omitempty"`  // ISO 8601
-	ExpiryDate     string   `json:"expiry_date,omitempty"`
-	UpdatedDate    string   `json:"updated_date,omitempty"`
-	Status         []string `json:"status,omitempty"`
-	NameServers    []string `json:"name_servers,omitempty"`
-	DomainAgeDays  int      `json:"domain_age_days,omitempty"`
-	DaysToExpiry   int      `json:"days_to_expiry,omitempty"`
-	RDAPEndpoint   string   `json:"rdap_endpoint,omitempty"` // which registrar RDAP answered
-	Error          string   `json:"error,omitempty"`
+	Registrar     string   `json:"registrar,omitempty"`
+	CreatedDate   string   `json:"created_date,omitempty"` // ISO 8601
+	ExpiryDate    string   `json:"expiry_date,omitempty"`
+	UpdatedDate   string   `json:"updated_date,omitempty"`
+	Status        []string `json:"status,omitempty"`
+	NameServers   []string `json:"name_servers,omitempty"`
+	DomainAgeDays int      `json:"domain_age_days,omitempty"`
+	DaysToExpiry  int      `json:"days_to_expiry,omitempty"`
+	RDAPEndpoint  string   `json:"rdap_endpoint,omitempty"` // which registrar RDAP answered
+	Error         string   `json:"error,omitempty"`
 }
 
 // SSLInfo captures TLS certificate details from a fresh dial.
@@ -70,20 +70,20 @@ type SSLInfo struct {
 // PerfMetrics captures request-time performance data aggregated from
 // the HTML/scripts/CSS we already collected during the scan.
 type PerfMetrics struct {
-	TTFB                int64 `json:"ttfb_ms"`                  // time to first byte (ms)
-	TotalDuration       int64 `json:"total_duration_ms"`         // full scan duration (ms)
-	HTMLSizeBytes       int64         `json:"html_size_bytes"`
-	JSBundleSizeBytes   int64         `json:"js_bundle_size_bytes"`
-	CSSBundleSizeBytes  int64         `json:"css_bundle_size_bytes"`
-	ScriptCount         int           `json:"script_count"`
-	StylesheetCount     int           `json:"stylesheet_count"`
-	InlineScriptBytes   int64         `json:"inline_script_bytes"`
-	ExternalScriptBytes int64         `json:"external_script_bytes"`
-	TotalAssetBytes     int64         `json:"total_asset_bytes"`     // rough estimate = HTML + JS + CSS
-	HeadingsCount       int           `json:"headings_count"`        // h1-h6 tags
-	MetaTagsCount       int           `json:"meta_tags_count"`
-	LinksCount          int           `json:"links_count"`
-	ImagesCount         int           `json:"images_count"`
+	TTFB                int64 `json:"ttfb_ms"`           // time to first byte (ms)
+	TotalDuration       int64 `json:"total_duration_ms"` // full scan duration (ms)
+	HTMLSizeBytes       int64 `json:"html_size_bytes"`
+	JSBundleSizeBytes   int64 `json:"js_bundle_size_bytes"`
+	CSSBundleSizeBytes  int64 `json:"css_bundle_size_bytes"`
+	ScriptCount         int   `json:"script_count"`
+	StylesheetCount     int   `json:"stylesheet_count"`
+	InlineScriptBytes   int64 `json:"inline_script_bytes"`
+	ExternalScriptBytes int64 `json:"external_script_bytes"`
+	TotalAssetBytes     int64 `json:"total_asset_bytes"` // rough estimate = HTML + JS + CSS
+	HeadingsCount       int   `json:"headings_count"`    // h1-h6 tags
+	MetaTagsCount       int   `json:"meta_tags_count"`
+	LinksCount          int   `json:"links_count"`
+	ImagesCount         int   `json:"images_count"`
 }
 
 // ─── DNS via DoH ────────────────────────────────────────────────────
@@ -103,7 +103,7 @@ type dohAnswer struct {
 }
 
 type dohResponse struct {
-	Status int        `json:"Status"`
+	Status int         `json:"Status"`
 	Answer []dohAnswer `json:"Answer"`
 }
 
@@ -353,9 +353,9 @@ func QueryWHOIS(ctx context.Context, domain string) *WHOISInfo {
 			EventAction string `json:"eventAction"`
 			EventDate   string `json:"eventDate"`
 		} `json:"events"`
-		Status []string `json:"status"`
+		Status   []string `json:"status"`
 		Entities []struct {
-			Roles      []string     `json:"roles"`
+			Roles      []string       `json:"roles"`
 			VCardArray [2]interface{} `json:"vcardArray"`
 		} `json:"entities"`
 		Nameservers []struct {
@@ -498,12 +498,12 @@ func tlsVersionString(v uint16) string {
 // Counters come from the HTML/scripts/CSS we already collected.
 func computePerfMetrics(html string, scripts, cssLinks []string, htmlSize int64, ttfb, totalDuration time.Duration, metaTags map[string]string) *PerfMetrics {
 	p := &PerfMetrics{
-		TTFB:          ttfb.Milliseconds(),
-		TotalDuration: totalDuration.Milliseconds(),
-		HTMLSizeBytes: htmlSize,
-		ScriptCount:   len(scripts),
+		TTFB:            ttfb.Milliseconds(),
+		TotalDuration:   totalDuration.Milliseconds(),
+		HTMLSizeBytes:   htmlSize,
+		ScriptCount:     len(scripts),
 		StylesheetCount: len(cssLinks),
-		MetaTagsCount: len(metaTags),
+		MetaTagsCount:   len(metaTags),
 	}
 
 	// Rough size estimates from HTML content length (we don't fetch external assets)

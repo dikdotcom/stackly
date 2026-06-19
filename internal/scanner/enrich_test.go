@@ -76,13 +76,13 @@ func TestDetectDNSProvider(t *testing.T) {
 // TestRootDomain validates the eTLD+1 heuristic.
 func TestRootDomain(t *testing.T) {
 	cases := map[string]string{
-		"example.com":         "example.com",
-		"www.example.com":     "example.com",
-		"a.b.c.example.io":    "example.io",
-		"localhost":           "localhost",
-		"sub.example.co.uk":   "co.uk", // intentionally over-trims (no PSL)
-		"":                    "",
-		"single":              "single",
+		"example.com":       "example.com",
+		"www.example.com":   "example.com",
+		"a.b.c.example.io":  "example.io",
+		"localhost":         "localhost",
+		"sub.example.co.uk": "co.uk", // intentionally over-trims (no PSL)
+		"":                  "",
+		"single":            "single",
 	}
 	for in, want := range cases {
 		got := rootDomain(in)
@@ -95,10 +95,10 @@ func TestRootDomain(t *testing.T) {
 // TestExtractHost validates URL hostname extraction.
 func TestExtractHost(t *testing.T) {
 	cases := map[string]string{
-		"https://example.com":      "example.com",
-		"https://example.com:443":  "example.com",
+		"https://example.com":       "example.com",
+		"https://example.com:443":   "example.com",
 		"https://sub.example.com/x": "sub.example.com",
-		"not a url":                "",
+		"not a url":                 "",
 	}
 	for in, want := range cases {
 		got := extractHost(in)

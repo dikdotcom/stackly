@@ -15,11 +15,11 @@ import (
 
 // CacheEntry represents a cached scan result
 type CacheEntry struct {
-	URL       string             `json:"url"`
+	URL       string              `json:"url"`
 	Result    *scanner.ScanResult `json:"result"`
-	CachedAt  time.Time          `json:"cached_at"`
-	ExpiresAt time.Time          `json:"expires_at"`
-	UserAgent string             `json:"user_agent"`
+	CachedAt  time.Time           `json:"cached_at"`
+	ExpiresAt time.Time           `json:"expires_at"`
+	UserAgent string              `json:"user_agent"`
 }
 
 // Cache is a 24h result cache with optional file persistence

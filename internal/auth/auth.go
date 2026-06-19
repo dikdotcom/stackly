@@ -125,6 +125,8 @@ func NewStore(path string) (*Store, error) {
 }
 
 // bootstrapFromEnv creates initial users from environment variables.
+// Existing users (loaded from disk) are preserved: only missing keys are added.
+// This ensures persisted state (RequestCount, LastSeenAt) survives restarts.
 func (s *Store) bootstrapFromEnv() error {
 	now := time.Now()
 
@@ -136,6 +138,9 @@ func (s *Store) bootstrapFromEnv() error {
 				continue
 			}
 			key, tier := splitKeyTier(entry, "free")
+			if _, exists := s.users[key]; exists {
+				continue // preserve persisted state
+			}
 			s.users[key] = &User{
 				ID:        newID(),
 				Key:       key,
@@ -161,6 +166,9 @@ func (s *Store) bootstrapFromEnv() error {
 			}
 			user, pass := strings.TrimSpace(parts[0]), strings.TrimSpace(parts[1])
 			key := hashKey("basic:" + user + ":" + pass)
+			if _, exists := s.users[key]; exists {
+				continue
+			}
 			s.users[key] = &User{
 				ID:        newID(),
 				Key:       key,
@@ -265,13 +273,13 @@ func (s *Store) RecordUsage(key string) {
 
 // QuotaInfo describes a user's current quota state.
 type QuotaInfo struct {
-	UserID      string    `json:"user_id"`
-	Tier        string    `json:"tier"`
-	Used        int       `json:"used"`
-	Limit       int       `json:"limit"`
-	Remaining   int       `json:"remaining"`
-	MonthReset  time.Time `json:"month_reset"`
-	Unlimited   bool      `json:"unlimited"`
+	UserID     string    `json:"user_id"`
+	Tier       string    `json:"tier"`
+	Used       int       `json:"used"`
+	Limit      int       `json:"limit"`
+	Remaining  int       `json:"remaining"`
+	MonthReset time.Time `json:"month_reset"`
+	Unlimited  bool      `json:"unlimited"`
 }
 
 // Quota returns the current quota state for a user. Pure read — does
@@ -455,13 +463,13 @@ type bucket struct {
 
 // Auth is the middleware. Each user has their own bucket.
 type Auth struct {
-	store        *Store
-	enabled      bool
-	defaultRate  int
-	window       time.Duration
-	jwtSecret    []byte
-	mu           sync.Mutex
-	anonBuckets  map[string]*bucket // IP-level fallback
+	store       *Store
+	enabled     bool
+	defaultRate int
+	window      time.Duration
+	jwtSecret   []byte
+	mu          sync.Mutex
+	anonBuckets map[string]*bucket // IP-level fallback
 }
 
 // New creates an Auth instance with optional JWT secret.

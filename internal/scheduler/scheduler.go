@@ -164,14 +164,14 @@ func (s *Scheduler) runOne(id string) {
 // produce an equally large outbound POST. Consumers wanting the full
 // HTML can call /api/results/:id with their own credentials.
 type WebhookPayload struct {
-	Version    string                `json:"version"` // "v1"
-	Event      string                `json:"event"`   // "scan.completed" | "scan.failed"
-	ScheduleID string                `json:"schedule_id"`
-	URL        string                `json:"url"`
-	Status     string                `json:"status"`
-	Error      string                `json:"error,omitempty"`
-	Timestamp  time.Time             `json:"timestamp"`
-	Result     *scanner.ScanResult   `json:"result"`
+	Version    string              `json:"version"` // "v1"
+	Event      string              `json:"event"`   // "scan.completed" | "scan.failed"
+	ScheduleID string              `json:"schedule_id"`
+	URL        string              `json:"url"`
+	Status     string              `json:"status"`
+	Error      string              `json:"error,omitempty"`
+	Timestamp  time.Time           `json:"timestamp"`
+	Result     *scanner.ScanResult `json:"result"`
 }
 
 // MaxPayloadHTMLBytes caps HTML included in webhook payloads. Pages

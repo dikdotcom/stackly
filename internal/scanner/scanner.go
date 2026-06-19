@@ -25,9 +25,9 @@ type Result struct {
 
 // Match represents a single detection match
 type Match struct {
-	Type     string // html, header, script, cookie, url, js_global, css, meta
-	Rule     string // the rule that matched
-	Detail   string // what was found
+	Type   string // html, header, script, cookie, url, js_global, css, meta
+	Rule   string // the rule that matched
+	Detail string // what was found
 }
 
 // ScanResult contains the full scan output
@@ -42,9 +42,9 @@ type ScanResult struct {
 	Cookies      []string
 	Results      []Result
 	Emails       []string
-	DNS          *DNSInfo    `json:"dns,omitempty"`
-	WHOIS        *WHOISInfo  `json:"whois,omitempty"`
-	SSL          *SSLInfo    `json:"ssl,omitempty"`
+	DNS          *DNSInfo     `json:"dns,omitempty"`
+	WHOIS        *WHOISInfo   `json:"whois,omitempty"`
+	SSL          *SSLInfo     `json:"ssl,omitempty"`
 	Perf         *PerfMetrics `json:"perf,omitempty"`
 	ScanDuration time.Duration
 	Error        error
@@ -63,7 +63,7 @@ type Scanner struct {
 
 	// ProgressCallback is invoked with phase updates during ScanURL.
 	// It runs on the scanner goroutine — implementations should not block.
-		ProgressCallback func(jobID, phase string, progress int, message string, partial []Result)
+	ProgressCallback func(jobID, phase string, progress int, message string, partial []Result)
 }
 
 // NewScanner creates a new scanner instance

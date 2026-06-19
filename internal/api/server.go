@@ -20,27 +20,27 @@ import (
 
 // Server is the HTTP API server
 type Server struct {
-	queue       *queue.JobQueue
-	cache       *cache.Cache
-	auth        *auth.Auth
-	userStore   *auth.Store
-	mux         *http.ServeMux
-	webDir      string
-	hub         *ws.Hub
+	queue        *queue.JobQueue
+	cache        *cache.Cache
+	auth         *auth.Auth
+	userStore    *auth.Store
+	mux          *http.ServeMux
+	webDir       string
+	hub          *ws.Hub
 	fingerprints *fingerprint.Database
-	schedStore  *scheduler.Store
+	schedStore   *scheduler.Store
 }
 
 // NewServer creates a new API server
 func NewServer(q *queue.JobQueue, c *cache.Cache, webDir string, a *auth.Auth, store *auth.Store, hub *ws.Hub, db *fingerprint.Database) *Server {
 	s := &Server{
-		queue:       q,
-		cache:       c,
-		auth:        a,
-		userStore:   store,
-		mux:         http.NewServeMux(),
-		webDir:      webDir,
-		hub:         hub,
+		queue:        q,
+		cache:        c,
+		auth:         a,
+		userStore:    store,
+		mux:          http.NewServeMux(),
+		webDir:       webDir,
+		hub:          hub,
 		fingerprints: db,
 	}
 	s.routes()
