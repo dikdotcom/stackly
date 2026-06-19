@@ -51,8 +51,21 @@ jobs:
       - name: Build
         run: go build ./...
       - name: Test
-        run: go test ./... -race -coverprofile=coverage.out
-      - name: Coverage
+        run: go test ./... -race
+      - name: Test (coverage)
+        # Only cover packages that have test files — packages without tests
+        # trigger `go: no such tool "covdata"` errors during coverage
+        # instrumentation. Filter to packages with at least one *_test.go.
+        run: |
+          TESTABLE=$(go list ./... | while read p; do
+            if [ -n "$(go list -f '{{range .TestGoFiles}}{{.}} {{end}}' "$p" 2>/dev/null)" ]; then
+              echo "$p"
+            fi
+          done | tr '\n' ' ')
+          echo "Coverage targets: $TESTABLE"
+          go test $TESTABLE -race -coverprofile=coverage.out -covermode=atomic
+      - name: Coverage summary
+        if: matrix.go == '1.22'
         run: |
           go tool cover -func=coverage.out | grep total | awk '{print "Total coverage:", $3}'
       - name: Upload coverage
