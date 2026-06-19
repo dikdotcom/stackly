@@ -166,7 +166,7 @@ const CATEGORY_LABELS = {
   maps:           'Maps',
 };
 
-// Map each raw category to its Wappalyzer top-level group
+// Map each raw category to its top-level group
 const CATEGORY_GROUP = {
   advertising:    'advertising',
   'tag-managers': 'tag-managers',
@@ -193,10 +193,10 @@ const CATEGORY_GROUP = {
   maps:           'maps',
 };
 
-// Top-level group order (Wappalyzer priority: marketing signals first, then infra, then stack, then aux)
+// Top-level group order (marketing signals first, then infra, then stack, then aux)
 const GROUP_ORDER = ['advertising', 'tag-managers', 'analytics', 'performance', 'cookie-compliance', 'live-chat', 'javascript', 'frameworks', 'cms', 'ecommerce', 'cdn', 'hosting', 'database', 'languages', 'fonts', 'security', 'payment', 'maps'];
 
-// Sub-category priority (Wappalyzer-style: marketing → infrastructure → stack → misc)
+// Sub-category priority (marketing → infrastructure → stack → misc)
 const CATEGORY_ORDER = ['advertising', 'tag-managers', 'analytics', 'seo', 'performance', 'cookie-compliance', 'live-chat', 'javascript', 'framework', 'build-tool', 'css', 'cms', 'ecommerce', 'cdn', 'hosting', 'server', 'database', 'programming', 'api', 'fonts', 'security', 'payment', 'maps'];
 
 // Top-level group meta — label, accent color, optional gradient (highlight groups)
@@ -716,7 +716,7 @@ function renderResult(job) {
   // 2. Marketing & Tag Managers highlight (if any)
   renderMarketingHighlight(grouped);
 
-  // 3. Wappalyzer-style top-level group sections (skip marketing-tagmanagers already shown above)
+  // 3. Top-level group sections (skip marketing-tagmanagers already shown above)
   let html = '';
   const groupsPresent = {};
   for (const cat of Object.keys(grouped)) {

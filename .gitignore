@@ -27,3 +27,8 @@ data/scan_results/
 
 # Docker
 Dockerfile.local
+# Runtime data — generated at runtime, not source
+data/schedules.json
+
+# Built artifacts — regenerate from source
+web/extension/*.zip

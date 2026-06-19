@@ -1,12 +1,15 @@
 # Stackly
 
-Tech stack detection platform — Wappalyzer alternative built in Go with its own fingerprint database.
+Multi-tenant tech stack detection platform built in Go — headless browser scanning with its own fingerprint database, top-level category grouping, and contact email extraction.
 
-> Built because Wappalyzer's dataset is AGPL and we wanted something we could deploy, extend, and ship to clients without licensing surprises.
+> Built for production deployments where fingerprint detection needs to be auditable, extensible, and license-clean. The dataset is hand-written and shipped as plain JSON that ops can review.
 
 ## Features
 
-- **Detection engine**: 87 technologies, 8 detection methods (HTML, headers, scripts, CSS, meta tags, JS globals, cookies, URL patterns)
+- **Detection engine**: 133 technologies, 23 categories, 8 detection methods (HTML, headers, scripts, CSS, meta tags, JS globals, cookies, URL patterns)
+- **Top-level category grouping**: 18 groups (advertising, tag-managers, cookie-compliance, performance, seo, maps, etc.) with priority ordering
+- **Contact email extraction**: mailto links, plaintext patterns, JSON-LD (`Organization.email`, `ContactPoint.email`), `data-*` attributes, and SSR hydration data (`__NEXT_DATA__`, `__NUXT__`)
+- **Contact page waterfall**: when the main page has no email, falls back to fetching `/contact`, `/kontak`, `/redaksi`, `/hubungi` via parallel HTTP + chromedp deep nav
 - **Stripe + PayPal detection** including JS-bundled sites via `pk_live_*`, `pk_test_*`, `data-stripe-*` attribute sniffing
 - **JS global `__proto__` walking** discovers vendor SDK methods like `Stripe.elements`, `gtag.apply` even when minified
 - **User-Agent rotation** across 14 real browser UAs (Chrome/Firefox/Safari/Edge, Win/Mac/Linux) — bypasses naive bot detection
@@ -17,23 +20,252 @@ Tech stack detection platform — Wappalyzer alternative built in Go with its ow
 - **Chrome extension** in `extension/` for in-browser scans
 - **Docker** multi-stage build using `chromedp/headless-shell`
 
+## Tutorial
+
+Step-by-step guide for setting up Stackly from a fresh clone. Assumes basic familiarity with Go and the command line.
+
+### 1. Prerequisites
+
+| Tool | Version | Why |
+|---|---|---|
+| **Go** | 1.22 or 1.23 | Compiles the server + CLI |
+| **Chrome / Chromium** | 90+ | Needed by chromedp for page rendering |
+| **Git** | any | Clone the repo |
+
+The scanner auto-detects Chrome. Set `CHROME_BIN` env var to override. On Linux without a system Chrome:
+
+```bash
+# Debian/Ubuntu
+sudo apt install -y chromium-browser
+
+# Or use the bundled headless-shell (recommended for servers/Docker)
+# Dockerfile uses chromedp/headless-shell — works without a desktop browser
+```
+
+### 2. Clone & Build
+
+```bash
+git clone https://github.com/dikdotcom/stackly.git
+cd stackly
+
+# Build the server
+go build -o bin/stackly-server ./cmd/server
+
+# Build the CLI
+go build -o bin/stackly-cli ./cmd/techstack
+
+# Verify
+./bin/stackly-server --help
+```
+
+You should see `🚀 Stackly — Tech Stack Detector` and a list of flags.
+
+### 3. Configure Authentication (optional)
+
+Without auth, the API is open. For local development that's fine. For anything exposed to a network, set auth.
+
+**Option A: HTTP Basic auth** (simplest for personal use)
+
+```bash
+export STACKLY_BASIC_USERS="andika:your-password"
+./bin/stackly-server -port=8890
+```
+
+**Option B: API keys with tiers**
+
+```bash
+export STACKLY_API_KEYS=*** k_admin_zZz:admin"
+./bin/stackly-server -port=8890
+```
+
+**Option C: JWT**
+
+```bash
+export STACKLY_JWT_SECRET=*** y-stackly-server -port=8890
+```
+
+You can combine all three — they're checked in order: API key → Basic → JWT.
+
+### 4. Run Your First Scan
+
+```bash
+# Start the server
+./bin/stackly-server -port=8890
+
+# In another terminal, check health
+curl http://localhost:8890/api/health
+# {"status":"ok",...}
+
+# Submit a scan (no auth if STACKLY_BASIC_USERS not set)
+curl -X POST http://localhost:8890/api/scan \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://react.dev"}'
+
+# Returns: {"id":"abc123...","status":"pending","url":"https://react.dev"}
+
+# Get results
+curl http://localhost:8890/api/results/abc123
+```
+
+With auth, add the header:
+
+```bash
+curl -u "andika:your-password" http://localhost:8890/api/scan ...
+# OR
+curl -H "X-API-Key: ***" http://localhost:8890/api/scan ...
+```
+
+### 5. Open the Web UI
+
+Navigate to `http://localhost:8890` in your browser. You should see:
+
+- The Stackly header with quota widget
+- A URL input to submit scans
+- Category groups (advertising, analytics, frameworks, etc.)
+- Result cards with detected technologies, confidence badges, and detail
+
+If auth is enabled, the UI auto-pops a sign-in modal on first scan attempt.
+
+### 6. Build the Chrome Extension Zip (optional)
+
+The web UI offers a "Download Chrome Extension" button that serves `web/extension/stackly-chrome-extension.zip`. Since this is a build artifact (regenerated from `extension/`), it's not in the repo. Build it:
+
+```bash
+cd extension
+zip -r ../web/extension/stackly-chrome-extension.zip .
+cd ..
+
+# Now the download works at /extension/stackly-chrome-extension.zip
+```
+
+Or load the extension unpacked directly:
+
+1. Open `chrome://extensions/` in Chrome
+2. Enable **Developer mode** (top right)
+3. Click **Load unpacked**
+4. Select the `extension/` directory
+
+### 7. Run Tests
+
+```bash
+# All tests
+go test ./...
+
+# With race detection
+go test -race ./...
+
+# Specific package
+go test ./internal/scanner/
+
+# Verbose
+go test -v ./internal/scanner/ -run TestExtractEmails
+```
+
+Tests run offline except for `TestQueryDNS_Live` and `TestQuerySSL_Live` which hit `example.com`. Skip those with `-short`:
+
+```bash
+go test -short ./...
+```
+
+### 8. Add Custom Fingerprints
+
+The fingerprint DB lives at `data/fingerprints.json`. Each technology entry has this shape:
+
+```json
+{
+  "slug": "my-cms",
+  "name": "My CMS",
+  "website": "https://mycms.com",
+  "category": "cms",
+  "icon": "my-cms.svg",
+  "detectors": {
+    "html":       [{"pattern": "powered by my-cms"}],
+    "headers":    [{"name": "X-Powered-By", "pattern": "MyCMS"}],
+    "scripts":    [{"pattern": "/my-cms/"}],
+    "meta":       [{"name": "generator", "pattern": "MyCMS"}],
+    "js_globals": ["MyCMS"],
+    "cookies":    ["mycms_session"],
+    "css":        [{"pattern": ".my-cms-class"}],
+    "url":        [{"pattern": "/wp-content/plugins/my-cms/"}]
+  }
+}
+```
+
+8 detection vectors, each with a pattern. A technology is detected when ANY pattern matches. Confidence is the count of distinct vectors that matched (max ~200).
+
+After editing, restart the server — the DB loads at startup from `data/fingerprints.json`.
+
+For bulk additions, use `scripts/expand-fingerprints.py` as a template — it processes a list of new fingerprints and merges them into the DB.
+
+### 9. Production Deployment
+
+The simplest path is Docker:
+
+```bash
+docker compose up -d
+```
+
+This uses the multi-stage Dockerfile which:
+- Compiles Go with CGO disabled
+- Bundles `chromedp/headless-shell` (~120MB)
+- Exposes port 8890
+- Mounts `stackly-data` volume for `data/` persistence
+
+For custom VPS deploys (Hetzner, Tencent, DigitalOcean):
+
+```bash
+# On the VPS
+git clone https://github.com/dikdotcom/stackly.git /opt/stackly
+cd /opt/stackly
+go build -o bin/stackly-server ./cmd/server
+
+# Run with systemd
+sudo tee /etc/systemd/system/stackly.service <<EOF
+[Unit]
+Description=Stackly
+After=network.target
+
+[Service]
+Type=simple
+User=stackly
+WorkingDirectory=/opt/stackly
+Environment=STACKLY_BASIC_USERS=youruser:yourpass
+ExecStart=/opt/stackly/bin/stackly-server -port=8890
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl enable --now stackly
+```
+
+Remember to open port 8890 in your cloud provider's Security Group / firewall.
+
+### 10. Troubleshooting
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `failed to find chrome binary` | No Chrome installed | Install chromium or set `CHROME_BIN` |
+| `auth required` on every scan | Auth enabled but no env vars set | Set `STACKLY_NO_AUTH=*** for open mode (dev only) |
+| `chromedp: unhandled event EventAdoptedStyleSheetsModified` | Non-fatal warning | Safe to ignore — known chromedp limitation |
+| Scan timeout | Slow target site | Increase with `-timeout=60s` CLI flag |
+| 0 emails detected | Site uses contact forms, not raw emails | Expected behavior — see [Contact email extraction](#features) |
+
 ## Quick Start
 
-### Local
+For the impatient:
 
 ```bash
 go build -o bin/stackly-server ./cmd/server
-go build -o bin/stackly-cli ./cmd/techstack
-
 ./bin/stackly-server -port=8890
 # Open http://localhost:8890
 ```
 
-### Docker
+Or with Docker:
 
 ```bash
 docker compose up -d
-# Open http://localhost:8890
 ```
 
 ### API
@@ -47,6 +279,9 @@ curl -X POST http://localhost:8890/api/scan \
   -H "X-API-Key: *** \
   -H "Content-Type: application/json" \
   -d '{"url":"https://react.dev"}'
+
+# Get result
+curl http://localhost:8890/api/results/<id>
 
 # API docs
 open http://localhost:8890/api/docs/ui
@@ -112,6 +347,8 @@ Install:
 2. Load unpacked → select `extension/`
 3. Click extension icon → set API URL + key
 
+To enable the in-UI download button, build the zip artifact first — see [Tutorial §6](#6-build-the-chrome-extension-zip-optional).
+
 ## Architecture
 
 ```
@@ -126,11 +363,15 @@ internal/
   fingerprint/ JSON DB loader
   queue/       Job queue + worker pool
   scanner/     Detection engine + UA pool
+  scheduler/   Scheduled scans + webhook dispatch
+  ws/          WebSocket job progress
+  report/      HTML + PDF report generation
+  metrics/     Per-tier counters
 
 data/
-  fingerprints.json   87 technologies, 17 categories
-  users.json          User store (auto-created from env)
-  cache.json          Persistent scan cache
+  fingerprints.json   133 technologies, 23 categories (v1.2.0)
+  users.json          User store (auto-created from env, gitignored)
+  cache.json          Persistent scan cache (gitignored)
 
 web/
   index.html     SPA shell
@@ -154,7 +395,13 @@ go vet ./...
 docker build -t stackly:test .
 
 # Run locally with auth
-STACKLY_API_KEYS=***  ./bin/stackly-server
+STACKLY_API_KEYS=*** /bin/stackly-server
+
+# Add a fingerprint
+$EDITOR data/fingerprints.json  # add new entry, restart server
+
+# Regenerate Chrome extension zip
+cd extension && zip -r ../web/extension/stackly-chrome-extension.zip . && cd ..
 ```
 
 ## License
@@ -163,7 +410,7 @@ MIT
 
 ## Credits
 
-- Inspired by [Wappalyzer](https://www.wappalyzer.com/) but with our own (non-AGPL) fingerprint database
 - Built with [chromedp](https://github.com/chromedp/chromedp) for browser automation
 - JWT via [golang-jwt/jwt](https://github.com/golang-jwt/jwt)
 - Runs on [chromedp/headless-shell](https://github.com/chromedp/docker-headless-shell) in Docker
+- Icons via [devicon](https://devicon.dev/)

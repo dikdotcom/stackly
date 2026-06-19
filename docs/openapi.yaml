@@ -5,7 +5,10 @@ info:
     Tech stack detection API — identify what technologies a website uses
     (CMS, frameworks, hosting, analytics, payment, CDN, etc).
 
-    Inspired by Wappalyzer; uses its own fingerprint database.
+    133 technologies across 23 categories. Detects via 8 vectors:
+    HTML, headers, scripts, CSS, meta tags, JS globals, cookies, URL patterns.
+    Includes contact email extraction (JSON-LD, data-*, SSR data) and
+    contact-page waterfall fallback for sites that hide emails behind forms.
   version: "1.0"
   contact:
     name: Andika

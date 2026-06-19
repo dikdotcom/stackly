@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Expand Stackly fingerprints to Wappalyzer-level coverage.
+"""Expand Stackly fingerprints with broader category coverage.
 Adds ~35 techs focused on marketing, retargeting, live-chat, analytics, CDN, framework.
 Re-categorizes: HubSpot (analytics->marketing), Facebook Pixel (analytics->retargeting),
 Intercom/Crisp (helpdesk->live-chat).

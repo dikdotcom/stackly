@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-Expand fingerprints.json with Wappalyzer-style categories:
+Expand fingerprints.json with top-level category grouping:
 - tag-managers (move GTM, Segment from analytics; add Tealium, Adobe Launch)
 - cookie-compliance (OneTrust, Cookiebot, CookieYes, Iubenda, TrustArc)
 - performance (Boomerang, NitroPack, Speed Curve, New Relic Browser)
 - advertising (consolidate marketing + retargeting)
 - seo (Yoast, etc.)
 - miscellaneous (consolidate api, payment, security catch-alls)
+
+Priority order: marketing signals first, then infra, then stack, then aux.
 """
 
 import json
@@ -185,7 +187,7 @@ def main():
     data["version"] = "1.2.0"
     if "_meta" not in data:
         data["_meta"] = {}
-    data["_meta"]["wappalyzer_style_categories"] = sorted({t["category"] for t in techs})
+    data["_meta"]["top_level_categories"] = sorted({t["category"] for t in techs})
 
     DATA.write_text(json.dumps(data, indent=2) + "\n")
 

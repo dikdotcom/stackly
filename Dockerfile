@@ -37,7 +37,7 @@ FROM chromedp/headless-shell:latest AS runtime
 
 # Add labels
 LABEL org.opencontainers.image.title="Stackly"
-LABEL org.opencontainers.image.description="Tech stack detection platform (Wappalyzer alternative)"
+LABEL org.opencontainers.image.description="Multi-tenant tech stack detection platform — headless browser scanning with fingerprint DB, top-level category grouping, and contact email extraction"
 LABEL org.opencontainers.image.source="https://github.com/dikdotcom/stackly"
 
 # Install minimal runtime deps (tini for proper signal handling, curl for healthcheck)
